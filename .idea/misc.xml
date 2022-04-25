@@ -20,12 +20,14 @@
         <entry key="..\:/HK2-2021-2022/MobileProgramming/FoodyLayout/app/src/main/res/drawable/textview_border.xml" value="0.282" />
         <entry key="..\:/HK2-2021-2022/MobileProgramming/FoodyLayout/app/src/main/res/drawable/viewholder_popular.xml" value="0.2355" />
         <entry key="..\:/HK2-2021-2022/MobileProgramming/FoodyLayout/app/src/main/res/layout/activity_cart_list.xml" value="0.33" />
-        <entry key="..\:/HK2-2021-2022/MobileProgramming/FoodyLayout/app/src/main/res/layout/activity_checkout.xml" value="0.4703703703703704" />
+        <entry key="..\:/HK2-2021-2022/MobileProgramming/FoodyLayout/app/src/main/res/layout/activity_checkout.xml" value="0.5" />
         <entry key="..\:/HK2-2021-2022/MobileProgramming/FoodyLayout/app/src/main/res/layout/activity_intro.xml" value="0.2336448598130841" />
-        <entry key="..\:/HK2-2021-2022/MobileProgramming/FoodyLayout/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/HK2-2021-2022/MobileProgramming/FoodyLayout/app/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="..\:/HK2-2021-2022/MobileProgramming/FoodyLayout/app/src/main/res/layout/activity_my_favorites.xml" value="0.3591485507246377" />
         <entry key="..\:/HK2-2021-2022/MobileProgramming/FoodyLayout/app/src/main/res/layout/activity_show_detail.xml" value="0.20202020202020202" />
         <entry key="..\:/HK2-2021-2022/MobileProgramming/FoodyLayout/app/src/main/res/layout/viewholder_cart.xml" value="0.36666666666666664" />
         <entry key="..\:/HK2-2021-2022/MobileProgramming/FoodyLayout/app/src/main/res/layout/viewholder_category.xml" value="1.0" />
+        <entry key="..\:/HK2-2021-2022/MobileProgramming/FoodyLayout/app/src/main/res/layout/viewholder_favorites.xml" value="0.1" />
         <entry key="..\:/HK2-2021-2022/MobileProgramming/FoodyLayout/app/src/main/res/layout/viewholder_popular.xml" value="1.0" />
         <entry key="..\:/HK2-2021-2022/MobileProgramming/FoodyLayout/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3675" />
         <entry key="..\:/HK2-2021-2022/MobileProgramming/FoodyLayout/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3675" />
