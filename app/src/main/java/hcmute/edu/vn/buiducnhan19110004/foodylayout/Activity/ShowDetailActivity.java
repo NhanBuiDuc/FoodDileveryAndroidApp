@@ -8,7 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.CartDB;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.CartDomain;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.FoodDomain;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Helper.CurrentUser;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Helper.ManagementCart;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.R;
 
@@ -18,14 +23,13 @@ public class ShowDetailActivity extends AppCompatActivity {
     private ImageView plusBtn, minusBtn, picFood;
     private FoodDomain object;
     int numberOrder = 1;
-    private ManagementCart managementCart;
-
+    FoodyDBHelper foodyDBHelper = new FoodyDBHelper(this);
+    CartDB cartDB = new CartDB(foodyDBHelper);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_detail);
 
-        managementCart = new ManagementCart(this);
         initView();
         getBundle();
     }
@@ -64,8 +68,8 @@ public class ShowDetailActivity extends AppCompatActivity {
         addToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                object.setNumberInCart(numberOrder);
-                managementCart.insertFood(object);
+                CartDomain cartItem = new CartDomain(CurrentUser.getUser_id(), object.getId(), numberOrder);
+                cartDB.InsertCart(cartItem);
             }
         });
     }

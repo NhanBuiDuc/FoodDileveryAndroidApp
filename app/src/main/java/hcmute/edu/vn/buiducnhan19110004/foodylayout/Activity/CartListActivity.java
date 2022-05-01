@@ -12,25 +12,33 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Adaptor.CartListAdapter;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.CartDB;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.CartDomain;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Helper.ManagementCart;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Interface.ChangeNumberItemsListener;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+
 public class CartListActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
+
     private RecyclerView recyclerViewList;
-    private ManagementCart managementCart;
     TextView totalFeeTxt, taxTxt, deliveryTxt, totalTxt, emptyTxt;
     private double tax;
     private ScrollView scrollView;
     private TextView textViewCheckOut;
+
+    private FoodyDBHelper foodyDBHelper = new FoodyDBHelper(this);
+    private CartDB cartDB = new CartDB(foodyDBHelper);
+    private ArrayList<CartDomain> cartDomainArrayList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_list);
-
-        managementCart = new ManagementCart(this);
 
         initView();
         initList();
@@ -78,17 +86,19 @@ public class CartListActivity extends AppCompatActivity {
     private void initList() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewList.setLayoutManager(linearLayoutManager);
-        adapter = new CartListAdapter(managementCart.getListCart(), this, new ChangeNumberItemsListener() {
+        adapter = new CartListAdapter(new ChangeNumberItemsListener() {
             @Override
             public void changed() {
                 CalculateCart();
             }
-        });
+        }, foodyDBHelper);
 
         recyclerViewList.setAdapter(adapter);
-        if (managementCart.getListCart().isEmpty()) {
+        cartDomainArrayList = cartDB.SelectAllItemsInCart();
+        if(cartDomainArrayList.size() < 1){
             emptyTxt.setVisibility(View.VISIBLE);
             scrollView.setVisibility(View.GONE);
+        }
         } else {
             emptyTxt.setVisibility(View.GONE);
             scrollView.setVisibility(View.VISIBLE);
