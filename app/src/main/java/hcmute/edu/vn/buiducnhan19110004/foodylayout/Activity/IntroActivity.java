@@ -9,6 +9,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.CartDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.CategoryDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodVariationDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
@@ -25,7 +26,7 @@ public class IntroActivity extends AppCompatActivity {
     private ProductDB productDB = new ProductDB(foodyDBHelper);;
     private CategoryDB categoryDB = new CategoryDB(foodyDBHelper);;
     private FoodVariationDB food_variationDB;
-
+    private CartDB cartDB = new CartDB(foodyDBHelper);
     ArrayList<FoodDomain> foodList = new ArrayList<>();
     ArrayList<CategoryDomain> categoryList = new ArrayList<>();
     ArrayList<FoodVariationDomain> food_variationList = new ArrayList<>();
@@ -38,10 +39,17 @@ public class IntroActivity extends AppCompatActivity {
         InsertFood();
         InsertCategory();
         AutomaticInsertFoodVariation();
-        // test data
-        productDB.SelectAllProducts();
-        categoryDB.SelectAllCategories();
-        food_variationDB.SelectAllVariations();
+        cartDB.DeleteAllItemsInCart();
+        try {
+            // test data
+            productDB.SelectAllProducts();
+            categoryDB.SelectAllCategories();
+            cartDB.SelectAllItemsInCart();
+            food_variationDB.SelectAllVariations();
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
 
         startBtn=findViewById(R.id.startBtn);
         startBtn.setOnClickListener(new View.OnClickListener() {

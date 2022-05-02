@@ -8,10 +8,13 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.CartDomain;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.FoodDomain;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Helper.CurrentUser;
 
 public class CartDB {
     private FoodyDBHelper dbHelper;
+    private ProductDB productDB;
+
     private final String TABLE_NAME = "cart";
     private final String first_col = "user_id";
     private final String second_col = "product_id";
@@ -19,6 +22,7 @@ public class CartDB {
 
     public CartDB(FoodyDBHelper dbHelper) {
         this.dbHelper = dbHelper;
+        this.productDB  = new ProductDB(dbHelper);
     }
 
     public long InsertCart(CartDomain cart){
@@ -34,7 +38,7 @@ public class CartDB {
             db.setTransactionSuccessful();
             db.endTransaction();
             System.out.println("User ID is " + cart.getUser_id() +
-                    " and product id = " + cart.getProduct_id() + " quantity = "
+                    " and product id = " + cart.getProduct_id() + " and quantity = "
                     + cart.getQuantity() + " was inserted into table " + TABLE_NAME);
             return row;
         }
@@ -95,6 +99,110 @@ public class CartDB {
             System.out.println("Get data failed from table " + TABLE_NAME);
             db.endTransaction();
             return null;
+        }
+    }
+    public Double CalculateCart(){
+        ArrayList<CartDomain> cartItems = this.SelectAllItemsInCart();
+        Double total = Double.valueOf(0);
+        for(CartDomain cartItem: cartItems){
+            FoodDomain product = productDB.SelectProductByID(cartItem.getProduct_id());
+            total = total + (product.getFee() * Double.valueOf(cartItem.getQuantity()) );
+        }
+        return total;
+    }
+    public int CountCart(){
+        ArrayList<CartDomain> cartItems = this.SelectAllItemsInCart();
+        return cartItems.size();
+    }
+
+    public CartDomain SelectCartByProductID(int productID){
+        CartDomain cartItem;
+        String[] projection = {first_col, second_col, third_col};
+        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
+
+        Cursor cursor;
+        db.beginTransaction();
+        try{
+            cursor = db.query(TABLE_NAME, projection, "user_id = ? AND product_id = ?", new String[]{String.valueOf(CurrentUser.getUser_id()), String.valueOf(productID)}, null, null, null);
+            cursor.moveToNext();
+
+            int user_id = cursor.getInt(0);
+            int product_id = cursor.getInt(1);
+            int quantity = cursor.getInt(2);
+
+            System.out.println("User_id: "+ user_id);
+            System.out.println("Product_id: "+ product_id);
+            System.out.println("Quantity: "+ quantity);
+
+
+            cartItem = new CartDomain(user_id, product_id, quantity);
+
+            System.out.println("Get cart item of user_id = " + user_id + " and product_id = " + product_id + " data from " + TABLE_NAME + " successfully");
+            db.endTransaction();
+            return cartItem;
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println(e);
+            System.out.println("Get data failed from table " + TABLE_NAME);
+            db.endTransaction();
+            return null;
+        }
+
+    }
+    // Add Quantity By One
+    public void PlusOneQuantity(int productID){
+        CartDomain cartItem = this.SelectCartByProductID(productID);
+        cartItem.setQuantity(cartItem.getQuantity() + 1);
+
+        SQLiteDatabase db = this.dbHelper.getWritableDatabase();
+        db.beginTransaction();
+        try{
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(first_col, cartItem.getUser_id());
+            contentValues.put(second_col, cartItem.getProduct_id());
+            contentValues.put(third_col, cartItem.getQuantity());
+
+            db.update(TABLE_NAME, contentValues, "product_id = ? ", new String[]{String.valueOf(productID)});
+            db.setTransactionSuccessful();
+            db.endTransaction();
+            System.out.println("User ID is " + cartItem.getUser_id() +
+                    " and product id = " + cartItem.getProduct_id() + " quantity = "
+                    + cartItem.getQuantity() + " was inserted into table " + TABLE_NAME);
+
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println("Insert failed to table " + TABLE_NAME);
+        }
+    }
+    // Minus Quantity By One
+    public void MinusOneQuantity(int productID){
+        CartDomain cartItem = this.SelectCartByProductID(productID);
+        if (cartItem.getQuantity() > 0){
+            cartItem.setQuantity(cartItem.getQuantity() - 1);
+            SQLiteDatabase db = this.dbHelper.getWritableDatabase();
+            db.beginTransaction();
+            try{
+
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(first_col, cartItem.getUser_id());
+                contentValues.put(second_col, cartItem.getProduct_id());
+                contentValues.put(third_col, cartItem.getQuantity());
+
+                db.update(TABLE_NAME, contentValues, "product_id = ? ", new String[]{String.valueOf(productID)});
+                db.setTransactionSuccessful();
+                db.endTransaction();
+                System.out.println("User ID is " + cartItem.getUser_id() +
+                        " and product id = " + cartItem.getProduct_id() + " quantity = "
+                        + cartItem.getQuantity() + " was inserted into table " + TABLE_NAME);
+
+            }
+            catch (SQLiteConstraintException e){
+                System.out.println("Insert failed to table " + TABLE_NAME);
+            }
+        }
+        else {
+            System.out.println("Quantity = 0");
         }
     }
 }

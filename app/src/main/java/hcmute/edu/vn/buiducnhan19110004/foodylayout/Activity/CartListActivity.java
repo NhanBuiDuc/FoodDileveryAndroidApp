@@ -15,7 +15,6 @@ import hcmute.edu.vn.buiducnhan19110004.foodylayout.Adaptor.CartListAdapter;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.CartDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.CartDomain;
-import hcmute.edu.vn.buiducnhan19110004.foodylayout.Helper.ManagementCart;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Interface.ChangeNumberItemsListener;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -86,32 +85,30 @@ public class CartListActivity extends AppCompatActivity {
     private void initList() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewList.setLayoutManager(linearLayoutManager);
-        adapter = new CartListAdapter(new ChangeNumberItemsListener() {
-            @Override
-            public void changed() {
-                CalculateCart();
-            }
-        }, foodyDBHelper);
+        cartDomainArrayList = cartDB.SelectAllItemsInCart();
+
+        adapter = new CartListAdapter(foodyDBHelper, cartDomainArrayList, CartListActivity.this);
 
         recyclerViewList.setAdapter(adapter);
-        cartDomainArrayList = cartDB.SelectAllItemsInCart();
+
         if(cartDomainArrayList.size() < 1){
             emptyTxt.setVisibility(View.VISIBLE);
             scrollView.setVisibility(View.GONE);
         }
-        } else {
+        else {
             emptyTxt.setVisibility(View.GONE);
             scrollView.setVisibility(View.VISIBLE);
         }
     }
 
-    private void CalculateCart() {
+    public void CalculateCart() {
+
         double percentTax = 0.02;
         double delivery = 10;
 
-        tax = Math.round((managementCart.getTotalFee() * percentTax) * 100) / 100;
-        double total = Math.round((managementCart.getTotalFee() + tax + delivery) * 100) / 100;
-        double itemTotal = Math.round(managementCart.getTotalFee() * 100) / 100;
+        double tax = Math.round((cartDB.CalculateCart() * percentTax) * 100) / 100;
+        double total = Math.round((cartDB.CalculateCart() + tax + delivery) * 100) / 100;
+        double itemTotal = Math.round(cartDB.CalculateCart() * 100) / 100;
 
         totalFeeTxt.setText("$" + itemTotal);
         taxTxt.setText("$" + tax);

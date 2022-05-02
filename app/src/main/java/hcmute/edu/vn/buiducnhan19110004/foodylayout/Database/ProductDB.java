@@ -75,7 +75,7 @@ public class ProductDB {
         Cursor cursor;
         db.beginTransaction();
         try{
-            cursor = db.query("product", projection, null, null, null, null, null);
+            cursor = db.query(TABLE_NAME, projection, null, null, null, null, null);
             while (cursor.moveToNext()){
                 int id = cursor.getInt(0);
                 String name = cursor.getString(1);
@@ -110,7 +110,7 @@ public class ProductDB {
         Cursor cursor;
         db.beginTransaction();
         try{
-            cursor = db.query(TABLE_NAME, projection, "WHERE name = ? ", new String[]{productName}, null, null, null);
+            cursor = db.query(TABLE_NAME, projection, "name = ? ", new String[]{productName}, null, null, null);
             cursor.moveToNext();
 
             int id = cursor.getInt(0);
@@ -142,11 +142,11 @@ public class ProductDB {
         FoodDomain food;
         String[] projection = {first_col, second_col, third_col, forth_col, fifth_col};
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
-
+        //
         Cursor cursor;
         db.beginTransaction();
         try{
-            cursor = db.query(TABLE_NAME, projection, "WHERE id = ? ", new String[]{String.valueOf(productID)}, null, null, null);
+            cursor = db.query(TABLE_NAME, projection, TABLE_NAME +".id = ? ", new String[]{String.valueOf(productID)}, null, null, null);
             cursor.moveToNext();
 
             int id = cursor.getInt(0);

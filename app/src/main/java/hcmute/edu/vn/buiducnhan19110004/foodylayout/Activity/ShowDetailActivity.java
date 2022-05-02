@@ -2,10 +2,12 @@ package hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -14,7 +16,6 @@ import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.CartDomain;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.FoodDomain;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Helper.CurrentUser;
-import hcmute.edu.vn.buiducnhan19110004.foodylayout.Helper.ManagementCart;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.R;
 
 public class ShowDetailActivity extends AppCompatActivity {
@@ -70,6 +71,10 @@ public class ShowDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 CartDomain cartItem = new CartDomain(CurrentUser.getUser_id(), object.getId(), numberOrder);
                 cartDB.InsertCart(cartItem);
+                Toast toast = Toast.makeText(ShowDetailActivity.this, "Item added into your cart!", Toast.LENGTH_SHORT);
+                toast.show();
+                Intent intent = new Intent(ShowDetailActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }
