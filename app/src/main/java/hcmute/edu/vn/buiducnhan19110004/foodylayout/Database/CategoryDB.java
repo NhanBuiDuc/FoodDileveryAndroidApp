@@ -30,7 +30,7 @@ public class CategoryDB {
             contentValues.put(second_col, categoryDomain.getTitle());
             contentValues.put(third_col, categoryDomain.getPic());
 
-            Long row = db.insertOrThrow(TABLE_NAME, null, contentValues);
+            long row = db.insertOrThrow(TABLE_NAME, null, contentValues);
             db.setTransactionSuccessful();
             db.endTransaction();
             System.out.println("ID is " + row + " was inserted into table " + TABLE_NAME);

@@ -4,8 +4,8 @@ public class UserDomain {
     private int id;
     private String full_name;
     private String email;
-    private String phone;
     private String password;
+    private String phone;
 
     public UserDomain(int id, String full_name, String email, String phone, String password) {
         this.id = id;
