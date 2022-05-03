@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
@@ -11,11 +12,21 @@
     android:elevation="3dp">
 
     <ImageView
+        android:id="@+id/removeCartBtn"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/feeEachItem"
+        app:layout_constraintStart_toStartOf="@+id/textViewDollarSign1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/btn_dialog" />
+
+    <ImageView
         android:id="@+id/picCart"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="14dp"
         android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +35,7 @@
         app:srcCompat="@drawable/pop_1" />
 
     <TextView
-        android:id="@+id/titleTxt"
+        android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -42,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/picCart"
-        app:layout_constraintStart_toStartOf="@+id/titleTxt"
+        app:layout_constraintStart_toStartOf="@+id/textViewTitle"
         app:srcCompat="@drawable/minus" />
 
     <TextView
@@ -77,9 +88,9 @@
         android:textColor="#373b54"
         android:textSize="16sp"
 
-        app:layout_constraintBottom_toBottomOf="@+id/titleTxt"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/titleTxt" />
+        app:layout_constraintTop_toTopOf="@+id/textViewTitle" />
 
     <TextView
         android:id="@+id/textViewDollarSign1"
@@ -93,7 +104,7 @@
         app:layout_constraintTop_toTopOf="@+id/feeEachItem" />
 
     <TextView
-        android:id="@+id/totalEachItem"
+        android:id="@+id/textViewItemTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
@@ -105,14 +116,14 @@
         app:layout_constraintTop_toTopOf="@+id/plusCartBtn" />
 
     <TextView
-        android:id="@+id/textViewDollarSign2"
+        android:id="@+id/textViewDollarSign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:text="$"
         android:textColor="#ff3d00"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/totalEachItem"
-        app:layout_constraintEnd_toStartOf="@+id/totalEachItem"
-        app:layout_constraintTop_toTopOf="@+id/totalEachItem" />
+        app:layout_constraintBottom_toBottomOf="@+id/textViewItemTotal"
+        app:layout_constraintEnd_toStartOf="@+id/textViewItemTotal"
+        app:layout_constraintTop_toTopOf="@+id/textViewItemTotal" />
 </androidx.constraintlayout.widget.ConstraintLayout>
