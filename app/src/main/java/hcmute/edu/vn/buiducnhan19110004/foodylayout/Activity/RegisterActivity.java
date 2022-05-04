@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.UserDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.UserDomain;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.R;
@@ -17,13 +19,15 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText fullnameEditText, emailEditText, phoneEditText, passEditText, confirmPassEditText;
     private TextView loginDirectTxt;
     private Button registerBtn;
-    private UserDB userDb;
+
 
     private String fullname;
     private String email;
     private String phone;
     private String password;
 
+    private FoodyDBHelper foodyDBHelper = new FoodyDBHelper(RegisterActivity.this);
+    private UserDB userDb = new UserDB(foodyDBHelper);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,10 +68,12 @@ public class RegisterActivity extends AppCompatActivity {
         password = passEditText.getText().toString().trim();
         UserDomain insertUser = new UserDomain(0, fullname, email, phone, password);
         if(userDb.CheckDuplicateEmail(insertUser)) {
-            //write code to return to register mage and announce that the email has already existed
+            Toast toast = Toast.makeText(RegisterActivity.this, "Email already existed", Toast.LENGTH_SHORT);
+            toast.show();
         }
         else {
             userDb.InsertUser(insertUser);
+            userDb.SelectALlUsers();
         }
     }
 }

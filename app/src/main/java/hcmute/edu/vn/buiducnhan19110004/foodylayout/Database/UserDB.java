@@ -10,14 +10,16 @@ import android.widget.Toast;
 import java.net.ConnectException;
 import java.util.ArrayList;
 
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.CartDomain;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.CategoryDomain;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.UserDomain;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Helper.CurrentUser;
 
 public class UserDB {
     private FoodyDBHelper dbHelper;
     private final String TABLE_NAME = "user";
     private final String first_col = "id";
-    private final String second_col = "fullname";
+    private final String second_col = "full_name";
     private final String third_col = "email";
     private final String fourth_col = "password";
     private final String fifth_col = "phone";
@@ -81,19 +83,19 @@ public class UserDB {
         try {
             cursor = db.query(TABLE_NAME, projection, null, null, null, null, null);
             while (cursor.moveToNext()) {
-                int id = cursor.getInt(0);
-                String fullname = cursor.getString(1);
-                String email = cursor.getString(2);
+                int user_id = cursor.getInt(0);
+                String full_name = cursor.getString(1);
+                String emailResult = cursor.getString(2);
                 String password = cursor.getString(3);
                 String phone = cursor.getString(4);
 
-                System.out.println("ID: " + id);
-                System.out.println("Fullname: " + fullname);
-                System.out.println("Email: " + email);
+                System.out.println("ID: " + user_id);
+                System.out.println("Fullname: " + full_name);
+                System.out.println("Email: " + emailResult);
                 System.out.println("Password: " + password);
                 System.out.println("Phone: " + phone);
 
-                UserDomain userDomain = new UserDomain(id, fullname, email, phone, password);
+                UserDomain userDomain = new UserDomain(user_id, full_name, emailResult, password, phone);
                 returnList.add(userDomain);
             }
 
@@ -110,28 +112,42 @@ public class UserDB {
         }
     }
 
-    public void DeleteUser(int id) {
-        SQLiteDatabase db = this.dbHelper.getWritableDatabase();
-        db.beginTransaction();
-        try {
-            db.delete(TABLE_NAME, "id = ?", new String[]{String.valueOf(id)});
-            System.out.println("Delete at id" + id + " from table " + TABLE_NAME);
-        }
-        catch (SQLiteException e) {
-            System.out.println("Delete failed at id " + id + " from table " + TABLE_NAME);
-            return;
-        }
-    }
+    public UserDomain SelectUserByEmail(String email){
+        UserDomain user;
+        String[] projection = {first_col, second_col, third_col, fourth_col, fifth_col};
+        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
 
-    public void DeleteAllUsers(){
-        SQLiteDatabase db = this.dbHelper.getWritableDatabase();
+        Cursor cursor;
+
         try{
-            db.delete(TABLE_NAME, null, null);
-            System.out.println("Delete all categories");
+            db.beginTransaction();
+            cursor = db.query(TABLE_NAME, projection, "email = ? ", new String[]{email}, null, null, null);
+            db.endTransaction();
+            cursor.moveToNext();
+
+            int user_id = cursor.getInt(0);
+            String full_name = cursor.getString(1);
+            String emailResult = cursor.getString(2);
+            String password = cursor.getString(3);
+            String phone = cursor.getString(4);
+
+            System.out.println("User_id: "+ user_id);
+            System.out.println("Full name : "+ full_name);
+            System.out.println("emailResult: "+ emailResult);
+            System.out.println("password: "+ password);
+            System.out.println("phone: "+ phone);
+
+            user = new UserDomain(user_id, full_name, emailResult, password, phone);
+
+            System.out.println("Get user where id =  " + user_id + " and email = " + emailResult + " and name = " + full_name + " from " + TABLE_NAME + " successfully");
+
+            return user;
         }
         catch (SQLiteConstraintException e){
-            System.out.println("Delete failed");
-            return;
+            System.out.println(e);
+            System.out.println("Get data failed from table " + TABLE_NAME);
+            return null;
         }
+
     }
 }

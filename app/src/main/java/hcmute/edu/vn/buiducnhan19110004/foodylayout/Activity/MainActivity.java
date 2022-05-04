@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -18,29 +19,44 @@ import hcmute.edu.vn.buiducnhan19110004.foodylayout.Adaptor.PopularAdaptor;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.CategoryDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.ProductDB;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Helper.CurrentUser;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.R;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.*;
 public class MainActivity extends AppCompatActivity {
-
-    private RecyclerView.Adapter categoryAdapter, popularAdapter;
+    //Views
+    TextView textViewUsername;
     private RecyclerView recyclerViewCategoryList, recyclerViewPopularList;
+
+    // Adapters
+    private RecyclerView.Adapter categoryAdapter, popularAdapter;
+
+    //Lists
     private ArrayList<FoodDomain> foodList = new ArrayList<>();
+
+    // DB classes
     private ProductDB productDB;
     private CategoryDB categoryDB;
     private FoodyDBHelper foodyDBHelper = new FoodyDBHelper(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        SetViews();
         recyclerViewCategory();
         recyclerViewPopular();
         bottomNavigation();
     }
+    private void SetViews(){
+        this.textViewUsername = findViewById(R.id.textViewUsername);
+        textViewUsername.setText("Hello " + CurrentUser.getFull_name());
+    }
     private void bottomNavigation() {
         FloatingActionButton floatingActionButton = findViewById(R.id.cartBtn);
         LinearLayout homeBtn = findViewById(R.id.homeBtn);
-
+        LinearLayout profileButton = findViewById(R.id.profileBtn);
+        LinearLayout supportButton = findViewById(R.id.supportBtn);
+        LinearLayout settingButton = findViewById(R.id.settingbtn);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,6 +67,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, MainActivity.class));
+            }
+        });
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(CurrentUser.isIsLogin() == false){
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }
+                else {
+                    // Make intent to profile activity
+                }
             }
         });
     }

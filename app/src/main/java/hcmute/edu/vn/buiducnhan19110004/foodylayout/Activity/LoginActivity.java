@@ -10,8 +10,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.UserDB;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.UserDomain;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Helper.CurrentUser;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -19,11 +23,15 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox rememberMeCheckbox;
     private TextView forgotPassTxt, registerDirectTxt;
     private Button loginBtn;
-    private UserDB userDb;
+
     private SharedPreferences loginSharedPreferences;
 
     private String email;
     private String pass;
+
+    //db classes
+    private FoodyDBHelper foodyDBHelper = new FoodyDBHelper(LoginActivity.this);
+    private UserDB userDb = new UserDB(foodyDBHelper);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(userDb.CheckLoginUser(email, pass)) {
             //write code to direct to main page
+
             if(rememberMeCheckbox.isChecked()) {
                 SharedPreferences.Editor editor = loginSharedPreferences.edit();
                 editor.putString("email", email);
@@ -85,9 +94,14 @@ public class LoginActivity extends AppCompatActivity {
                 editor.remove("rememberMe");
                 editor.commit();
             }
+            UserDomain user = userDb.SelectUserByEmail(email);
+            CurrentUser.SetCurrentUser(user);
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
         else {
             //write code to return to login page and announce that the email or password is incorrect
+            Toast toast = Toast.makeText(LoginActivity.this, "Incorrect username or password!", Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 }

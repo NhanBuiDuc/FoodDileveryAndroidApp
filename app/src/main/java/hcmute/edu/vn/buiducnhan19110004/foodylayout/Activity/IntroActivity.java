@@ -35,7 +35,7 @@ public class IntroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
 
-        SetCurrentUser();
+        //SetCurrentUser();
         InsertFood();
         InsertCategory();
         // AutomaticInsertFoodVariation();
@@ -45,7 +45,7 @@ public class IntroActivity extends AppCompatActivity {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(IntroActivity.this, MainActivity.class));
+                startActivity(new Intent(IntroActivity.this, LoginActivity.class));
             }
         });
     }
@@ -53,12 +53,6 @@ public class IntroActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-    }
-    private void SetCurrentUser(){
-        CurrentUser.setUser_id(1);
-        CurrentUser.setFull_name("Bui Duc Nhan");
-        CurrentUser.setPassword("12345");
 
     }
     private void InsertCategory(){
