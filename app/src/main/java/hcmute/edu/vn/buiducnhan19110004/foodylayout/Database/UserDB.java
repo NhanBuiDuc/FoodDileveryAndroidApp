@@ -26,6 +26,16 @@ public class UserDB {
         this.dbHelper = dbHelper;
     }
 
+    public boolean CheckDuplicateEmail(UserDomain userDomain) {
+        ArrayList<UserDomain> allUsers = SelectALlUsers();
+        for (UserDomain user : allUsers) {
+            if(userDomain.getEmail().equals(user.getEmail()))
+                return true;
+        }
+
+        return false;
+    }
+
     public long InsertUser(UserDomain userDomain) {
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
         db.beginTransaction();
@@ -91,7 +101,7 @@ public class UserDB {
     }
 
     public void DeleteUser(int id) {
-        SQLiteDatabase db = new this.dbHelper.getWritableDatabase();
+        SQLiteDatabase db = this.dbHelper.getWritableDatabase();
         db.beginTransaction();
         try {
             db.delete(TABLE_NAME, "id = ?", new String[]{String.valueOf(id)});
