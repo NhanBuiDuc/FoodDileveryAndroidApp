@@ -27,7 +27,7 @@ public class FoodyDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-        sqLiteDatabase.execSQL("CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NUll, username text, password text, fullname text)");
+        sqLiteDatabase.execSQL("CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NUll, fullname text, email text, password text, phone text)");
         sqLiteDatabase.execSQL("CREATE TABLE product (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NUll, name text, pic text, description text, price real)");
         sqLiteDatabase.execSQL("CREATE TABLE category (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NUll, title text, pic text)");
         sqLiteDatabase.execSQL("CREATE TABLE cart (user_id INTEGER REFERENCES user(id), product_id INTEGER REFERENCES product(id), quantity INTEGER, PRIMARY KEY(user_id, product_id))");
