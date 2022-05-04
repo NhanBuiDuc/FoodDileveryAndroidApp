@@ -9,6 +9,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.CartDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.CategoryDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodVariationDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
@@ -25,7 +26,7 @@ public class IntroActivity extends AppCompatActivity {
     private ProductDB productDB = new ProductDB(foodyDBHelper);;
     private CategoryDB categoryDB = new CategoryDB(foodyDBHelper);;
     private FoodVariationDB food_variationDB;
-
+    private CartDB cartDB = new CartDB(foodyDBHelper);
     ArrayList<FoodDomain> foodList = new ArrayList<>();
     ArrayList<CategoryDomain> categoryList = new ArrayList<>();
     ArrayList<FoodVariationDomain> food_variationList = new ArrayList<>();
@@ -37,17 +38,14 @@ public class IntroActivity extends AppCompatActivity {
         SetCurrentUser();
         InsertFood();
         InsertCategory();
-        AutomaticInsertFoodVariation();
-        // test data
-        productDB.SelectAllProducts();
-        categoryDB.SelectAllCategories();
-        food_variationDB.SelectAllVariations();
+        // AutomaticInsertFoodVariation();
+        DeleteAllCart();
 
         startBtn=findViewById(R.id.startBtn);
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(IntroActivity.this,MainActivity.class));
+                startActivity(new Intent(IntroActivity.this, MainActivity.class));
             }
         });
     }
@@ -65,7 +63,7 @@ public class IntroActivity extends AppCompatActivity {
     }
     private void InsertCategory(){
         categoryDB.DeleteAllCategories();
-
+        categoryDB.SelectAllCategories();
         categoryList.add(new CategoryDomain("Pizza", "cat_1"));
         categoryList.add(new CategoryDomain("Burger", "cat_2"));
         categoryList.add(new CategoryDomain("Hot dog", "cat_3"));
@@ -74,6 +72,7 @@ public class IntroActivity extends AppCompatActivity {
         for(CategoryDomain category: categoryList){
             categoryDB.InsertCategory(category);
         }
+        categoryDB.SelectAllCategories();
     }
     private void InsertFood(){
         try{
@@ -82,13 +81,15 @@ public class IntroActivity extends AppCompatActivity {
         catch (Exception e){
             System.out.println(e);
         }
-
+        productDB.SelectAllProducts();
         foodList.add(new FoodDomain("Pepperoni pizza", "pizza1", "slices pepperoni,mozzarella cheese,fresh oregano, ground black pepper,pizza sauce", 9.76));
         foodList.add(new FoodDomain("Cheese Burger", "burger", "beef, Gouda Cheese, Special Sauce, Lettuce, tomato", 8.79));
         foodList.add(new FoodDomain("Vegetable pizza", "pizza2", "olive oil, Vegetable oil, pitted kalamata, cherry tomatoes, fresh oregano, basil", 8.5));
         for(FoodDomain food: foodList){
             productDB.InsertProduct(food);
         }
+
+        productDB.SelectAllProducts();
     }
     private void AutomaticInsertFoodVariation(){
         try{
@@ -97,6 +98,8 @@ public class IntroActivity extends AppCompatActivity {
         catch (Exception e){
             System.out.println(e);
         }
+        food_variationDB.SelectAllVariations();
+
         try{
             ArrayList<CategoryDomain> categoryDomainArrayList;
             categoryDomainArrayList = categoryDB.SelectAllCategories();
@@ -114,5 +117,10 @@ public class IntroActivity extends AppCompatActivity {
         catch (Exception e){
             System.out.println(e);
         }
+    }
+    private void DeleteAllCart(){
+        cartDB.ClearCartTable();
+
+        cartDB.SelectAllItemsInCartOfAllUsers();
     }
 }

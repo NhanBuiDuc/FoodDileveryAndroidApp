@@ -1,28 +1,40 @@
 package hcmute.edu.vn.buiducnhan19110004.foodylayout.Adaptor;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity.ShowDetailActivity;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.CartDB;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.CartDomain;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.FoodDomain;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Helper.CurrentUser;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.R;
 
 import java.util.ArrayList;
 
 public class PopularAdaptor extends RecyclerView.Adapter<PopularAdaptor.ViewHolder> {
+    FoodyDBHelper foodyDBHelper;
     ArrayList<FoodDomain> popularFood;
+    Context context;
+    CartDB cartDB;
 
-    public PopularAdaptor(ArrayList<FoodDomain> popularFood) {
+    public PopularAdaptor(ArrayList<FoodDomain> popularFood, Context context) {
         this.popularFood = popularFood;
+        this.context = context;
+        this.foodyDBHelper = new FoodyDBHelper(context);
+        this.cartDB = new CartDB(foodyDBHelper);
     }
 
     @Override

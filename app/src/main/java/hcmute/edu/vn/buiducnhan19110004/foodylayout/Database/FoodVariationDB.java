@@ -28,12 +28,11 @@ public class FoodVariationDB implements Serializable {
 
     public long InsertFoodVariation(FoodVariationDomain foodVariationDomain){
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
-        db.beginTransaction();
         try{
             ContentValues contentValues = new ContentValues();
             contentValues.put(first_col, foodVariationDomain.getCategory_id());
             contentValues.put(second_col, foodVariationDomain.getProduct_id());
-
+            db.beginTransaction();
             Long row = db.insertOrThrow(TABLE_NAME, null, contentValues);
             db.setTransactionSuccessful();
             db.endTransaction();
@@ -50,9 +49,10 @@ public class FoodVariationDB implements Serializable {
         String[] projection = {first_col, second_col};
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
         Cursor cursor;
-        db.beginTransaction();
         try{
+            db.beginTransaction();
             cursor = db.query(TABLE_NAME, projection, null, null, null, null, null);
+            db.endTransaction();
             while (cursor.moveToNext()){
                 int category_id = cursor.getInt(0);
                 int product_id = cursor.getInt(1);
@@ -64,12 +64,10 @@ public class FoodVariationDB implements Serializable {
                 returnList.add(foodVariation);
             }
             System.out.println("Get " + returnList.size() + " rows of data from " + TABLE_NAME + " successfully");
-            db.endTransaction();
             return returnList;
         }
         catch (SQLiteConstraintException e){
             System.out.println("Get data failed from table " + TABLE_NAME);
-            db.endTransaction();
             return null;
         }
     }

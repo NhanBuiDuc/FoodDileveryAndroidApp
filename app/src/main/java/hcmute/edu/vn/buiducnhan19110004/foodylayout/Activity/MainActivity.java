@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         foodList = productDB.SelectAllProducts();
 
-        popularAdapter = new PopularAdaptor(foodList);
+        popularAdapter = new PopularAdaptor(foodList, MainActivity.this);
         recyclerViewPopularList.setAdapter(popularAdapter);
     }
 }

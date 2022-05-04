@@ -9,8 +9,11 @@ import androidx.annotation.Nullable;
 
 public class FoodyDBHelper extends SQLiteOpenHelper {
     public FoodyDBHelper(@Nullable Context context) {
-        super(context, "foody.db", null, 3);
+        super(context, "foody.db", null, 5);
     }
+    // Ham Delete khong duoc de db.beginTransaction va db.endTransaction
+    // Ham Insert phai co db.setTransactionSuccessful();
+
     // truy vấn không trả kết quả: CREATE, INSERT, UPDATE, DELETE
     public void QueryData(String query){
         SQLiteDatabase database = getWritableDatabase();
