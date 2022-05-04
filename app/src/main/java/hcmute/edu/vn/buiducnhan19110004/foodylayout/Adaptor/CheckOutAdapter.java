@@ -41,7 +41,7 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_cart, parent, false);
+        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_checkout_cart_list, parent, false);
 
         return new CheckOutAdapter.ViewHolder(inflate);
     }
@@ -49,13 +49,16 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CartDomain cartItem = cartDomainArrayList.get(position);
-        FoodDomain accordingFood = productDB.SelectProductByID(cartItem.getProduct_id());
+        if(cartItem != null){
+            FoodDomain accordingFood = productDB.SelectProductByID(cartItem.getProduct_id());
+            if(accordingFood != null){
+                holder.textViewQuantity.setText( String.valueOf(cartItem.getQuantity() ));
+                holder.textViewTitle.setText(accordingFood.getTitle());
+                double itemTotal = accordingFood.getFee() * Double.valueOf( cartItem.getQuantity() );
+                holder.textViewItemTotal.setText(Double.toString(itemTotal));
+            }
 
-        holder.textViewQuantity.setText( String.valueOf(cartItem.getQuantity()) );
-        holder.textViewTitle.setText(accordingFood.getTitle());
-
-        Double itemTotal = accordingFood.getFee() * Double.valueOf( cartItem.getQuantity() );
-        holder.textViewItemTotal.setText(String.valueOf(itemTotal));
+        }
     }
 
     @Override
