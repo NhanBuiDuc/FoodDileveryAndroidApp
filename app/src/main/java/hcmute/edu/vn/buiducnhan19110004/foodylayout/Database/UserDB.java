@@ -26,6 +26,16 @@ public class UserDB {
         this.dbHelper = dbHelper;
     }
 
+    public boolean CheckLoginUser(String email, String pass) {
+        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM user WHERE email='"+email+"' AND password='"+pass+"'", null);
+
+        if(cursor.getCount() > 0)
+            return true;
+
+        return false;
+    }
+
     public boolean CheckDuplicateEmail(UserDomain userDomain) {
         ArrayList<UserDomain> allUsers = SelectALlUsers();
         for (UserDomain user : allUsers) {

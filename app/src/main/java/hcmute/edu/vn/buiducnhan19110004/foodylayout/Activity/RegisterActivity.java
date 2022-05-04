@@ -29,11 +29,11 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        fullnameEditText = findViewById(R.id.fullnameEditText);
-        emailEditText = findViewById(R.id.emailEditText);
-        phoneEditText = findViewById(R.id.phoneEditText);
-        passEditText = findViewById(R.id.passwordEditText);
-        confirmPassEditText = findViewById(R.id.confirmPasswordEditText);
+        fullnameEditText = findViewById(R.id.fullnameRegisterEditText);
+        emailEditText = findViewById(R.id.emailRegisterEditText);
+        phoneEditText = findViewById(R.id.phoneRegisterEditText);
+        passEditText = findViewById(R.id.passwordRegisterEditText);
+        confirmPassEditText = findViewById(R.id.confirmPasswordRegisterEditText);
 
         registerBtn = findViewById(R.id.registerBtn);
         loginDirectTxt = findViewById(R.id.directLoginTextView);
