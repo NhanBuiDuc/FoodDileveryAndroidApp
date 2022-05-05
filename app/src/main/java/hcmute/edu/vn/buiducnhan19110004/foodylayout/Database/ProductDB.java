@@ -23,6 +23,7 @@ public class ProductDB {
     public ProductDB(FoodyDBHelper dbHelper) {
         this.dbHelper = dbHelper;
     }
+
     public long InsertProduct(FoodDomain foodDomain){
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
         try{
