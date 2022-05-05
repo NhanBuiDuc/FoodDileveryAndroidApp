@@ -154,6 +154,73 @@ public class UserDB {
 
     }
 
+    public UserDomain SelectUserById(int id){
+        UserDomain user;
+        String[] projection = {first_col, second_col, third_col, fourth_col, fifth_col};
+        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
+
+        Cursor cursor;
+
+        try{
+            db.beginTransaction();
+            cursor = db.query(TABLE_NAME, projection, "id = ? ", new String[]{String.valueOf(id)}, null, null, null);
+            db.endTransaction();
+            cursor.moveToNext();
+
+            int user_id = cursor.getInt(0);
+            String full_name = cursor.getString(1);
+            String emailResult = cursor.getString(2);
+            String password = cursor.getString(3);
+            String phone = cursor.getString(4);
+
+            System.out.println("User_id: "+ user_id);
+            System.out.println("Full name : "+ full_name);
+            System.out.println("emailResult: "+ emailResult);
+            System.out.println("password: "+ password);
+            System.out.println("phone: "+ phone);
+
+            user = new UserDomain(user_id, full_name, emailResult, password, phone);
+
+            System.out.println("Get user where id =  " + user_id + " and email = " + emailResult + " and name = " + full_name + " from " + TABLE_NAME + " successfully");
+
+            return user;
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println(e);
+            System.out.println("Get data failed from table " + TABLE_NAME);
+            return null;
+        }
+
+    }
+
+    public void UpdateCurrentUser(UserDomain updatedUser) {
+        UserDomain currentUser = this.SelectUserById(CurrentUser.getUser_id());
+        currentUser.setFull_name(updatedUser.getFull_name());
+        currentUser.setEmail(updatedUser.getEmail());
+        currentUser.setPhone(updatedUser.getPhone());
+        currentUser.setPassword(updatedUser.getPassword());
+
+        SQLiteDatabase db = this.dbHelper.getWritableDatabase();
+
+        try {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(first_col, currentUser.getId());
+            contentValues.put(second_col, currentUser.getFull_name());
+            contentValues.put(third_col, currentUser.getEmail());
+            contentValues.put(fourth_col, currentUser.getPassword());
+            contentValues.put(fifth_col, currentUser.getPhone());
+
+            db.beginTransaction();
+            db.update(TABLE_NAME, contentValues, "id = ? ", new String[]{String.valueOf(currentUser.getId())});
+            db.setTransactionSuccessful();
+            db.endTransaction();
+            System.out.println("Update successfully user " + currentUser.getId());
+        }
+        catch (SQLiteException e) {
+            System.out.println("Update user " + currentUser.getId() +" failed to table " + TABLE_NAME);
+        }
+    }
+
     public void DeleteUserById(int userId) {
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
 
