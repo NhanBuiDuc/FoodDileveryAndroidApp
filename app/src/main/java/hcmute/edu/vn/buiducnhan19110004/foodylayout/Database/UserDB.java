@@ -59,15 +59,18 @@ public class UserDB {
             contentValues.put(fourth_col, userDomain.getPassword());
             contentValues.put(fifth_col, userDomain.getPhone());
 
+            db.beginTransaction();
             long row = db.insertOrThrow(TABLE_NAME, null, contentValues);
             db.setTransactionSuccessful();
             db.endTransaction();
+
             System.out.println("ID is " + row + " was inserted into table " + TABLE_NAME);
 
             return row;
         }
         catch (SQLiteConstraintException e) {
             System.out.println("Insert failed to table " + TABLE_NAME);
+            System.out.println(e);
 
             return -1;
         }
@@ -149,5 +152,33 @@ public class UserDB {
             return null;
         }
 
+    }
+
+    public void DeleteUserById(int userId) {
+        SQLiteDatabase db = this.dbHelper.getWritableDatabase();
+
+        try{
+            int affected_row_num = db.delete(TABLE_NAME, "user_id = ?", new String[]{String.valueOf(userId)});
+            System.out.println("Delete User where user_id = " + userId + ", row effected: " + affected_row_num );
+
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println("Delete failed where user_id = " + userId);
+            return;
+        }
+    }
+
+    public void DeleteAllUsers() {
+        SQLiteDatabase db = this.dbHelper.getWritableDatabase();
+
+        try{
+            db.delete(TABLE_NAME, null, null);
+            System.out.println("Delete all User successfully");
+
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println("Delete failed");
+            return;
+        }
     }
 }
