@@ -28,6 +28,7 @@
         <activity android:name=".Activity.ShowDetailActivity" />
         <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.CheckOutActivity" />
+        <activity android:name=".Activity.MyFavoritesActivity"/>
     </application>
 
 </manifest>

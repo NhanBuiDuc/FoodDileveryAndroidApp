@@ -74,6 +74,8 @@ public class RegisterActivity extends AppCompatActivity {
         else {
             userDb.InsertUser(insertUser);
             userDb.SelectALlUsers();
+            Toast toast = Toast.makeText(RegisterActivity.this, "Register successfully for user " + insertUser.getEmail(), Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 }

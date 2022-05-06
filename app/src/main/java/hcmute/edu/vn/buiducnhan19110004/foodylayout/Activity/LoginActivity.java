@@ -78,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
         pass = passLogin.getText().toString().trim();
 
         if(userDb.CheckLoginUser(email, pass)) {
-            //write code to direct to main page
 
             if(rememberMeCheckbox.isChecked()) {
                 SharedPreferences.Editor editor = loginSharedPreferences.edit();

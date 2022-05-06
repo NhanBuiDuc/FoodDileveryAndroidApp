@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 public class FoodyDBHelper extends SQLiteOpenHelper {
     public FoodyDBHelper(@Nullable Context context) {
-        super(context, "foody.db", null, 6);
+        super(context, "foody.db", null, 7);
     }
     // Ham Delete khong duoc de db.beginTransaction va db.endTransaction
     // Ham Insert phai co db.setTransactionSuccessful();
@@ -44,6 +44,7 @@ public class FoodyDBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS category");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS cart");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS food_variation");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS favorite");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS transaction_history");
         onCreate(sqLiteDatabase);
     }

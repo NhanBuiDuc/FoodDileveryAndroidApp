@@ -50,7 +50,6 @@ public class UserDB {
 
     public long InsertUser(UserDomain userDomain) {
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
-        db.beginTransaction();
         try {
             ContentValues contentValues = new ContentValues();
             contentValues.putNull(first_col);
