@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodyLayout">
         <activity
+            android:name=".Activity.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.RegisterActivity"
             android:exported="false" />
         <activity
@@ -28,7 +31,7 @@
         <activity android:name=".Activity.ShowDetailActivity" />
         <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.CheckOutActivity" />
-        <activity android:name=".Activity.MyFavoritesActivity"/>
+        <activity android:name=".Activity.MyFavoritesActivity" />
     </application>
 
 </manifest>
