@@ -27,25 +27,25 @@ public class FoodyDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-        sqLiteDatabase.execSQL("CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NUll, full_name text, email text, password text, phone text)");
-        sqLiteDatabase.execSQL("CREATE TABLE product (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NUll, name text, pic text, description text, price real)");
-        sqLiteDatabase.execSQL("CREATE TABLE category (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NUll, title text, pic text)");
-        sqLiteDatabase.execSQL("CREATE TABLE cart (user_id INTEGER REFERENCES user(id), product_id INTEGER REFERENCES product(id), quantity INTEGER, PRIMARY KEY(user_id, product_id))");
-        sqLiteDatabase.execSQL("CREATE TABLE food_variation (category_id INTEGER REFERENCES category(id), product_id INTEGER REFERENCES product(id), PRIMARY KEY(category_id, product_id))");
-        sqLiteDatabase.execSQL("CREATE TABLE transaction_history (user_id INTEGER REFERENCES user(id), product_id INTEGER REFERENCES product(id), transaction_time text, PRIMARY KEY(user_id, product_id, transaction_time))");
-        sqLiteDatabase.execSQL("CREATE TABLE favorite (user_id INTEGER REFERENCES user(id), product_id INTEGER REFERENCES product(id), PRIMARY KEY(user_id, product_id))");
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NUll, full_name text, email text, password text, phone text)");
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS product (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NUll, name text, pic text, description text, price real)");
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS category (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NUll, title text, pic text)");
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS cart (user_id INTEGER REFERENCES user(id), product_id INTEGER REFERENCES product(id), quantity INTEGER, PRIMARY KEY(user_id, product_id))");
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS food_variation (category_id INTEGER REFERENCES category(id), product_id INTEGER REFERENCES product(id), PRIMARY KEY(category_id, product_id))");
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS transaction_history (user_id INTEGER REFERENCES user(id), product_id INTEGER REFERENCES product(id), transaction_time text, PRIMARY KEY(user_id, product_id, transaction_time))");
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS favorite (user_id INTEGER REFERENCES user(id), product_id INTEGER REFERENCES product(id), PRIMARY KEY(user_id, product_id))");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS user");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS product");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS category");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS cart");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS food_variation");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS favorite");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS transaction_history");
+//        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS user");
+//        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS product");
+//        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS category");
+//        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS cart");
+//        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS food_variation");
+//        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS favorite");
+//        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS transaction_history");
         onCreate(sqLiteDatabase);
     }
 }
