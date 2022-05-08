@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import java.net.ConnectException;
 import java.util.ArrayList;
 
@@ -192,18 +194,12 @@ public class UserDB {
 
     }
 
-    public void UpdateCurrentUser(UserDomain updatedUser) {
-        UserDomain currentUser = this.SelectUserById(CurrentUser.getUser_id());
-        currentUser.setFull_name(updatedUser.getFull_name());
-        currentUser.setEmail(updatedUser.getEmail());
-        currentUser.setPhone(updatedUser.getPhone());
-        currentUser.setPassword(updatedUser.getPassword());
+    public void UpdateCurrentUser(@NonNull UserDomain currentUser) {
 
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
 
         try {
             ContentValues contentValues = new ContentValues();
-            contentValues.put(first_col, currentUser.getId());
             contentValues.put(second_col, currentUser.getFull_name());
             contentValues.put(third_col, currentUser.getEmail());
             contentValues.put(fourth_col, currentUser.getPassword());
