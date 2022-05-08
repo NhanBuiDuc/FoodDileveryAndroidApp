@@ -55,8 +55,9 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton floatingActionButton = findViewById(R.id.cartBtn);
         LinearLayout homeBtn = findViewById(R.id.homeBtn);
         LinearLayout profileButton = findViewById(R.id.profileBtn);
-        LinearLayout supportButton = findViewById(R.id.supportBtn);
-        LinearLayout settingButton = findViewById(R.id.settingbtn);
+        LinearLayout favoriteButton = findViewById(R.id.favoriteMainBtn);
+        LinearLayout yourOrderButton = findViewById(R.id.yourOrderBtn);
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,8 +77,26 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 }
                 else {
-                    // Make intent to profile activity
+                    Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                    intent.putExtra("profile_phone", CurrentUser.getPhone());
+                    intent.putExtra("profile_name", CurrentUser.getFull_name());
+                    intent.putExtra("profile_email", CurrentUser.getEmail());
+                    intent.putExtra("profile_password", CurrentUser.getPassword());
+                    startActivity(intent);
                 }
+            }
+        });
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, MyFavoritesActivity.class);
+                startActivity(intent);
+            }
+        });
+        yourOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }

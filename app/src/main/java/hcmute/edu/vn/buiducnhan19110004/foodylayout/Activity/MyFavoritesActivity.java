@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -23,16 +25,22 @@ public class MyFavoritesActivity extends AppCompatActivity {
     private RecyclerView favoriteRecycleView;
     private TextView emptyTxt;
     private MyFavoriteAdapter adapter;
+    private ImageView goBackBtn;
 
     //Database variables
     FoodyDBHelper foodyDBHelper;
     FavoriteDB favoriteDB;
     ArrayList<FavoriteDomain> favoriteList;
 
+    //Intent contain info last activity
+    Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_favorites);
+
+        intent = getIntent();
 
         InitList();
     }
@@ -41,10 +49,18 @@ public class MyFavoritesActivity extends AppCompatActivity {
         emptyTxt = findViewById(R.id.favoriteEmptyTxt);
         favoriteScrollView = findViewById(R.id.favoriteScrollView);
         favoriteRecycleView = findViewById(R.id.favoriteRecyclerView);
+        goBackBtn = findViewById(R.id.goBackImageView);
         foodyDBHelper = new FoodyDBHelper(this);
         favoriteDB = new FavoriteDB(foodyDBHelper);
         favoriteList = favoriteDB.SelectFavoritesByCurrentUser();
         adapter = new MyFavoriteAdapter(foodyDBHelper, favoriteList, MyFavoritesActivity.this);
+
+        goBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         favoriteRecycleView.setLayoutManager(linearLayoutManager);

@@ -15,6 +15,7 @@ import hcmute.edu.vn.buiducnhan19110004.foodylayout.Adaptor.CartListAdapter;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.CartDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.CartDomain;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Helper.CurrentUser;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -47,11 +48,51 @@ public class CartListActivity extends AppCompatActivity {
     private void bottomNavigation() {
         FloatingActionButton floatingActionButton = findViewById(R.id.cartBtn);
         LinearLayout homeBtn = findViewById(R.id.homeBtn);
+        LinearLayout profileButton = findViewById(R.id.profileBtn);
+        LinearLayout favoriteButton = findViewById(R.id.favoriteCartListBtn);
+        LinearLayout yourOrderButton = findViewById(R.id.yourOrderBtn);
 
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(CartListActivity.this, CartListActivity.class));
+            }
+        });
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(CartListActivity.this, MainActivity.class));
+            }
+        });
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(CurrentUser.isIsLogin() == false){
+                    startActivity(new Intent(CartListActivity.this, LoginActivity.class));
+                }
+                else {
+                    Intent intent = new Intent(CartListActivity.this, ProfileActivity.class);
+                    intent.putExtra("profile_phone", CurrentUser.getPhone());
+                    intent.putExtra("profile_name", CurrentUser.getFull_name());
+                    intent.putExtra("profile_email", CurrentUser.getEmail());
+                    intent.putExtra("profile_password", CurrentUser.getPassword());
+                    intent.putExtra("return_activity", "CartListActivity");
+                    startActivity(intent);
+                }
+            }
+        });
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CartListActivity.this, MyFavoritesActivity.class);
+                intent.putExtra("return_activity", "CartListActivity");
+                startActivity(intent);
+            }
+        });
+        yourOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }

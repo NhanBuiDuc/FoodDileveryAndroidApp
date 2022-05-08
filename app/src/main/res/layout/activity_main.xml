@@ -242,7 +242,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/bottom_btn1" />
+                        app:srcCompat="@drawable/ic_baseline_home" />
 
                     <TextView
                         android:id="@+id/textViewHome"
@@ -266,7 +266,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/bottom_btn2" />
+                        app:srcCompat="@drawable/ic_baseline_profile" />
 
                     <TextView
                         android:id="@+id/textViewProfile"
@@ -307,7 +307,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/supportBtn"
+                    android:id="@+id/favoriteMainBtn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -318,20 +318,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/bottom_btn3" />
+                        app:srcCompat="@drawable/ic_baseline_star" />
 
                     <TextView
                         android:id="@+id/textViewProfileCart"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Support"
+                        android:text="Favorite"
                         android:textAlignment="center"
                         android:textColor="#676767"
                         android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/settingbtn"
+                    android:id="@+id/yourOrderBtn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -342,13 +342,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/bottom_btn4" />
+                        app:srcCompat="@drawable/ic_baseline_reorder" />
 
                     <TextView
                         android:id="@+id/textViewCartHome"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Settings"
+                        android:text="Your Order"
                         android:textAlignment="center"
                         android:textColor="#676767"
                         android:textSize="12sp" />

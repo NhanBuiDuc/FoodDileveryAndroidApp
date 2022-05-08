@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodyLayout">
         <activity
+            android:name=".Activity.OrderHistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.ProfileActivity"
             android:exported="false" />
         <activity

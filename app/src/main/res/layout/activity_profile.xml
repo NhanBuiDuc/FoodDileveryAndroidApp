@@ -21,7 +21,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/ImageViewBack"
+                android:id="@+id/goBackImageView"
                 android:src="@drawable/back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
                 android:textSize="20sp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/ImageViewBack"
+                app:layout_constraintLeft_toRightOf="@id/goBackImageView"
                 app:layout_constraintRight_toLeftOf="@id/profileUpdateTxt"
                 app:layout_constraintHorizontal_bias="0.62"/>
 
@@ -76,7 +76,7 @@
                 android:id="@+id/profilePhoneEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="0968307947"
+                android:text=""
                 android:textSize="20sp"
                 android:textColor="#000"
                 android:inputType="number"
@@ -107,7 +107,7 @@
                 android:id="@+id/profileNameEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Giang Dang"
+                android:text=""
                 android:textSize="20sp"
                 android:textColor="#000"
                 app:layout_constraintTop_toBottomOf="@id/TextViewName"
@@ -136,7 +136,7 @@
                 android:id="@+id/profileEmailEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="giangtiny123@gmail.com"
+                android:text=""
                 android:textSize="20sp"
                 android:textColor="#000"
                 app:layout_constraintTop_toBottomOf="@id/TextViewEmail"
@@ -165,8 +165,7 @@
                 android:id="@+id/profilePasswordEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="12345678"
-                android:inputType="textPassword"
+                android:text=""
                 android:textSize="20sp"
                 android:textColor="#000"
                 app:layout_constraintTop_toBottomOf="@id/TextViewPassword"
@@ -185,7 +184,7 @@
                 android:id="@+id/EditTextDeleteAccount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="DeleteAccount"
+                android:text="Delete Account"
                 android:textSize="20sp"
                 android:textColor="#000"
                 app:layout_constraintTop_toTopOf="parent"
