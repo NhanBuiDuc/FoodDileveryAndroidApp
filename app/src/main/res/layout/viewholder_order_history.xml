@@ -91,7 +91,7 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
-        android:id="@+id/priceOrderHistoryTextView"
+        android:id="@+id/feeOrderHistoryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"

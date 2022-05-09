@@ -49,4 +49,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/emptyTextOrderHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="You haven't ordered anything yet"
+        android:textSize="25sp"
+        android:layout_marginTop="40dp"
+        android:visibility="gone"/>
+
 </LinearLayout>

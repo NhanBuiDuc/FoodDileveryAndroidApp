@@ -32,7 +32,7 @@ public class FoodyDBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS category (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NUll, title text, pic text)");
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS cart (user_id INTEGER REFERENCES user(id), product_id INTEGER REFERENCES product(id), quantity INTEGER, PRIMARY KEY(user_id, product_id))");
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS food_variation (category_id INTEGER REFERENCES category(id), product_id INTEGER REFERENCES product(id), PRIMARY KEY(category_id, product_id))");
-        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS transaction_history (user_id INTEGER REFERENCES user(id), product_id INTEGER REFERENCES product(id), transaction_time text, PRIMARY KEY(user_id, product_id, transaction_time))");
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS transaction_history (user_id INTEGER REFERENCES user(id), product_id INTEGER REFERENCES product(id), quantity INTEGER, transaction_time text, PRIMARY KEY(user_id, product_id, transaction_time))");
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS favorite (user_id INTEGER REFERENCES user(id), product_id INTEGER REFERENCES product(id), PRIMARY KEY(user_id, product_id))");
     }
 
