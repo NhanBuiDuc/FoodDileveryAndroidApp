@@ -1,6 +1,8 @@
 package hcmute.edu.vn.buiducnhan19110004.foodylayout.Adaptor;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +17,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity.FoodListActivity;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity.ShowDetailActivity;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.CategoryDomain;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.R;
 
 import java.util.ArrayList;
 
 public class CategoryAdaptor extends RecyclerView.Adapter<CategoryAdaptor.ViewHolder> {
-    ArrayList<CategoryDomain> categoryDomains;
+    ArrayList<CategoryDomain> categoryDomains = new ArrayList<>();
 
     public CategoryAdaptor(ArrayList<CategoryDomain> categoryDomains) {
-        this.categoryDomains = categoryDomains;
+
+        for(CategoryDomain category: categoryDomains){
+            if(category.getPic() != null){
+                this.categoryDomains.add(category);
+            }
+        }
     }
 
     @Override
@@ -35,7 +44,8 @@ public class CategoryAdaptor extends RecyclerView.Adapter<CategoryAdaptor.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
         holder.categoryName.setText(categoryDomains.get(position).getTitle());
         String picUrl = categoryDomains.get(position).getPic();
         switch (position) {
@@ -66,7 +76,38 @@ public class CategoryAdaptor extends RecyclerView.Adapter<CategoryAdaptor.ViewHo
             }
         }
         int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(picUrl, "drawable", holder.itemView.getContext().getPackageName());
-
+        holder.categoryPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(), FoodListActivity.class);
+                intent.putExtra("category_object", categoryDomains.get(position));
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
+        holder.categoryName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(), FoodListActivity.class);
+                intent.putExtra("category_object", categoryDomains.get(position));
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
+        holder.categoryName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(), FoodListActivity.class);
+                intent.putExtra("category_object", categoryDomains.get(position));
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
+        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(), FoodListActivity.class);
+                intent.putExtra("category_object", categoryDomains.get(position));
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
         Glide.with(holder.itemView.getContext())
                 .load(drawableResourceId)
                 .into(holder.categoryPic);
@@ -77,7 +118,7 @@ public class CategoryAdaptor extends RecyclerView.Adapter<CategoryAdaptor.ViewHo
         return categoryDomains.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView categoryName;
         ImageView categoryPic;
         ConstraintLayout mainLayout;

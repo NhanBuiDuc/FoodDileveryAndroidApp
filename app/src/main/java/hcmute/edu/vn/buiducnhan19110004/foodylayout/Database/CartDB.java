@@ -256,4 +256,31 @@ public class CartDB {
             System.out.println("Quantity = 0");
         }
     }
+    public boolean isCartExists(int productID){
+        String[] projection = {first_col, second_col, third_col};
+        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
+
+        Cursor cursor;
+
+        try{
+            db.beginTransaction();
+            cursor = db.query(TABLE_NAME, projection, "user_id = ? AND product_id = ?", new String[]{String.valueOf(CurrentUser.getUser_id()), String.valueOf(productID)}, null, null, null);
+            db.endTransaction();
+            if(cursor.getCount() > 0){
+                System.out.println("Item exists int cart of of user_id = " + CurrentUser.getUser_id() + " and product_id = " + productID + " data from " + TABLE_NAME);
+
+                return true;
+            }
+            else{
+                System.out.println("Item does not exist int cart of of user_id = " + CurrentUser.getUser_id()  + " and product_id = " + productID + " data from " + TABLE_NAME);
+
+                return false;
+            }
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println(e);
+            System.out.println("Get data failed from table " + TABLE_NAME);
+            return false;
+        }
+    }
 }
