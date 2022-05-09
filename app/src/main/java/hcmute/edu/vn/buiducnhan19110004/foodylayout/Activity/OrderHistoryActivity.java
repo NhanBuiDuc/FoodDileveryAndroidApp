@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.R;
+
 public class OrderHistoryActivity extends AppCompatActivity {
 
     @Override
