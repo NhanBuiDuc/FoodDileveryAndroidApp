@@ -70,11 +70,17 @@ public class ShowDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 CartDomain cartItem = new CartDomain(CurrentUser.getUser_id(), object.getId(), numberOrder);
-                cartDB.InsertCart(cartItem);
-                Toast toast = Toast.makeText(ShowDetailActivity.this, "Item added into your cart!", Toast.LENGTH_SHORT);
-                toast.show();
-                Intent intent = new Intent(ShowDetailActivity.this, MainActivity.class);
-                startActivity(intent);
+                if(cartDB.isCartExists(cartItem.getProduct_id()) == false){
+                    cartDB.InsertCart(cartItem);
+                    Toast toast = Toast.makeText(ShowDetailActivity.this, "Item added into your cart!", Toast.LENGTH_SHORT);
+                    toast.show();
+                    Intent intent = new Intent(ShowDetailActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Toast toast = Toast.makeText(ShowDetailActivity.this, "Item already exists in your cart!", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
     }

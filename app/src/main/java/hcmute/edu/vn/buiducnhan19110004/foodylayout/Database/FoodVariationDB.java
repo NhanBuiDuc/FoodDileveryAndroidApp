@@ -70,6 +70,32 @@ public class FoodVariationDB implements Serializable {
             System.out.println("Get data failed from table " + TABLE_NAME);
             return null;
         }
+    }public ArrayList<FoodVariationDomain> SelectAllVariationByCategoryID(int categoryID){
+        ArrayList<FoodVariationDomain> returnList = new ArrayList<FoodVariationDomain>();
+        String[] projection = {first_col, second_col};
+        SQLiteDatabase db = this.dbHelper.getReadableDatabase();
+        Cursor cursor;
+        try{
+            db.beginTransaction();
+            cursor = db.query(TABLE_NAME, projection, "category_id = ?", new String[]{String.valueOf(categoryID)}, null, null, null);
+            db.endTransaction();
+            while (cursor.moveToNext()){
+                int category_id = cursor.getInt(0);
+                int product_id = cursor.getInt(1);
+
+                System.out.println( first_col + ": " + category_id);
+                System.out.println(second_col + ": " + product_id);
+
+                FoodVariationDomain foodVariation = new FoodVariationDomain(category_id, product_id);
+                returnList.add(foodVariation);
+            }
+            System.out.println("Get " + returnList.size() + " rows of data from " + TABLE_NAME + " successfully");
+            return returnList;
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println("Get data failed from table " + TABLE_NAME);
+            return null;
+        }
     }
     public void DeleteAllVariations(){
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();

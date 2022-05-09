@@ -170,7 +170,7 @@ public class ProductDB {
             return null;
         }
     }
-    public ArrayList<FoodDomain> SearchProductByName(String productName){
+    public ArrayList<FoodDomain> SearchProductByKeyWord(String productName){
         ArrayList<FoodDomain> returnList = new ArrayList<FoodDomain>();
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
         String[] projection = {first_col, second_col, third_col, forth_col, fifth_col};
@@ -184,7 +184,18 @@ public class ProductDB {
                 "or " +
                 "UPPER(name) LIKE UPPER('_" + productName + "') " +
                 "or " +
-                "UPPER(name) LIKE UPPER('_" + productName + "_')";
+                "UPPER(name) LIKE UPPER('_" + productName + "_') " +
+                        "or " +
+                        "UPPER(description) LIKE UPPER('" + productName + "%') " +
+                        "or " +
+                        "UPPER(description) LIKE UPPER('%" + productName + "%') " +
+                        "or " +
+                        "UPPER(description) LIKE UPPER('" + productName + "_') " +
+                        "or " +
+                        "UPPER(description) LIKE UPPER('_" + productName + "') " +
+                        "or " +
+                        "UPPER(description) LIKE UPPER('_" + productName + "_')";
+
 
         Cursor cursor;
         try{
