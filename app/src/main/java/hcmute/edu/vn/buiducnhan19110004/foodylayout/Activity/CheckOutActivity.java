@@ -75,9 +75,10 @@ public class CheckOutActivity extends AppCompatActivity {
                     transactionDB.InsertTransaction(transactionDomain);
                     
                     cartDB.DeleteAllItemsInCart();
-                    Toast.makeText(CheckOutActivity.this, "Your order is being processed", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(CheckOutActivity.this, MainActivity.class));                    
                 }
+
+                Toast.makeText(CheckOutActivity.this, "Your order is being processed", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(CheckOutActivity.this, MainActivity.class));
             }
         });
     }

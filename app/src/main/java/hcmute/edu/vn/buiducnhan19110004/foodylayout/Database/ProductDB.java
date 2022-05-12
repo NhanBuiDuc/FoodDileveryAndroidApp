@@ -29,7 +29,7 @@ public class ProductDB {
         try{
 
             ContentValues contentValues = new ContentValues();
-            contentValues.putNull(first_col);
+            contentValues.put(first_col, foodDomain.getId());
             contentValues.put(second_col, foodDomain.getTitle());
             contentValues.put(third_col, foodDomain.getPic());
             contentValues.put(forth_col, foodDomain.getDescription());

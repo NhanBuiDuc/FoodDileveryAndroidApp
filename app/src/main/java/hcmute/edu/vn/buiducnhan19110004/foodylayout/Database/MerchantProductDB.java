@@ -1,5 +1,6 @@
 package hcmute.edu.vn.buiducnhan19110004.foodylayout.Database;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,6 +18,29 @@ public class MerchantProductDB {
 
     public MerchantProductDB(FoodyDBHelper dBHelper) {
         this.dbHelper = dBHelper;
+    }
+
+    public long InsertMerchantProduct(MerchantProductDomain merchantProductDomain) {
+        SQLiteDatabase db = this.dbHelper.getWritableDatabase();
+        try{
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(first_col, merchantProductDomain.getMerchant_id());
+            contentValues.put(second_col, merchantProductDomain.getProduct_id());
+
+            db.beginTransaction();
+            Long row = db.insertOrThrow(TABLE_NAME, null, contentValues);
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+            System.out.println("ID is " + row + " was inserted");
+
+            return row;
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println("Insert failed");
+            return -1;
+        }
     }
 
     public MerchantProductDomain SelectMerchantFoodByProductId(int productId) {

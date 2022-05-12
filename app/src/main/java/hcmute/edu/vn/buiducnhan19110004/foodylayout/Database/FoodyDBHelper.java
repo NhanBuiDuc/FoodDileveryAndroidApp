@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 public class FoodyDBHelper extends SQLiteOpenHelper {
     public FoodyDBHelper(@Nullable Context context) {
-        super(context, "foody.db", null, 11);
+        super(context, "foody.db", null, 12);
     }
     // Ham Delete khong duoc de db.beginTransaction va db.endTransaction
     // Ham Insert phai co db.setTransactionSuccessful();
@@ -33,7 +33,7 @@ public class FoodyDBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS food_variation (category_id INTEGER REFERENCES category(id), product_id INTEGER REFERENCES product(id), PRIMARY KEY(category_id, product_id))");
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS transaction_history (user_id INTEGER REFERENCES user(id), product_id INTEGER REFERENCES product(id), quantity INTEGER, transaction_time text, PRIMARY KEY(user_id, product_id, transaction_time))");
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS favorite (user_id INTEGER REFERENCES user(id), product_id INTEGER REFERENCES product(id), PRIMARY KEY(user_id, product_id))");
-        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS merchant (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name text, address text)");
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS merchant (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name text, address text, pic text)");
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS merchant_product (merchant_id INTEGER REFERENCES merchant(id), product_id INTEGER REFERENCES product(id), PRIMARY KEY(merchant_id, product_id))");
     }
 

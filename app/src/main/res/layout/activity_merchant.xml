@@ -10,6 +10,7 @@
     tools:context=".Activity.MerchantActivity">
 
     <TextView
+        android:id="@+id/merchantNameTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Merchant's name"
@@ -21,11 +22,11 @@
     <ImageView
         android:id="@+id/merchantPicImageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/image_banner"
-        android:layout_weight="3"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_height="0dp"
+        android:src="@drawable/pizza_merchant"
+        android:layout_weight="6"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Address: "
-            android:textSize="18sp"
+            android:textSize="19sp"
             android:textColor="@color/black"/>
 
         <TextView
@@ -44,14 +45,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Merchant's address"
-            android:textSize="17sp"/>
+            android:textSize="18sp"
+            android:textColor="#30474C"/>
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="List of foods:"
-        android:textSize="18sp"
+        android:textSize="19sp"
         android:textColor="@color/black"
         android:layout_marginTop="30dp"/>
 

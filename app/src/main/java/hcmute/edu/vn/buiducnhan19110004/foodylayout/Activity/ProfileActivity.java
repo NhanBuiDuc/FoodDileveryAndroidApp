@@ -21,10 +21,9 @@ import hcmute.edu.vn.buiducnhan19110004.foodylayout.Helper.CurrentUser;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.R;
 
 public class ProfileActivity extends AppCompatActivity {
-    private ConstraintLayout deleteProfileBtn;
     private EditText profilePhone, profileName, profileEmail, profilePassword;
     private TextView updateProfileBtn;
-    private Button logOutBtn;
+    private Button logOutBtn, deleteProfileBtn;
     private ImageView goBackBtn;
 
     //Database classes
@@ -48,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
         foodyDBHelper = new FoodyDBHelper(this);
         userDB = new UserDB(foodyDBHelper);
 
-        deleteProfileBtn = findViewById(R.id.deleteProfileConstraintLayout);
+        deleteProfileBtn = findViewById(R.id.DeleteProfileButton);
         updateProfileBtn = findViewById(R.id.profileUpdateTxt);
         profilePhone = findViewById(R.id.profilePhoneEditText);
         profileName = findViewById(R.id.profileNameEditText);
