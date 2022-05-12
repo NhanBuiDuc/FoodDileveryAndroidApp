@@ -11,11 +11,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity.MerchantActivity;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity.ShowDetailActivity;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FavoriteDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
@@ -72,6 +75,14 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
                 Toast.makeText(baseContext, "Insert favorite successfully", Toast.LENGTH_SHORT).show();
             }
         });
+        holder.openMerchantBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(), MerchantActivity.class);
+                intent.putExtra("productId", foodDomainArrayList.get(position).getId());
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -84,6 +95,8 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
         ImageView imageViewFoodPicture, addFavoriteBtn;
         TextView textViewFoodTitle, textViewFee;
         TextView FoodList_buttonAdd;
+        ConstraintLayout openMerchantBtn;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.imageViewFoodPicture = itemView.findViewById(R.id.imageViewFoodPicture);
@@ -91,6 +104,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
             this.textViewFee = itemView.findViewById(R.id.textViewFee);
             this.FoodList_buttonAdd = itemView.findViewById(R.id.FoodList_buttonAdd);
             this.addFavoriteBtn = itemView.findViewById(R.id.addFavoriteButton);
+            this.openMerchantBtn = itemView.findViewById(R.id.foodListViewHolder);
         }
     }
 }

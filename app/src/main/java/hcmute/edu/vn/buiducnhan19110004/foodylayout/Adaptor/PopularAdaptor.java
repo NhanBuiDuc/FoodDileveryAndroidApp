@@ -11,9 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity.MerchantActivity;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity.ShowDetailActivity;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.CartDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FavoriteDB;
@@ -66,12 +69,21 @@ public class PopularAdaptor extends RecyclerView.Adapter<PopularAdaptor.ViewHold
                 holder.itemView.getContext().startActivity(intent);
             }
         });
-//        holder.addFavoriteBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                favoriteDB.InsertFavorite(new FavoriteDomain(CurrentUser.getUser_id(), popularFood.get(position).getId()));
-//            }
-//        });
+        holder.addFavoriteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                favoriteDB.InsertFavorite(new FavoriteDomain(CurrentUser.getUser_id(), popularFood.get(position).getId()));
+                Toast.makeText(context, "Insert favorite successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.openMerchantBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(), MerchantActivity.class);
+                intent.putExtra("productId", popularFood.get(position).getId());
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -80,9 +92,10 @@ public class PopularAdaptor extends RecyclerView.Adapter<PopularAdaptor.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title, fee, addFavoriteBtn;
-        ImageView pic;
+        TextView title, fee;
+        ImageView pic, addFavoriteBtn;
         TextView addBtn;
+        ConstraintLayout openMerchantBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,7 +103,8 @@ public class PopularAdaptor extends RecyclerView.Adapter<PopularAdaptor.ViewHold
             this.fee = itemView.findViewById(R.id.fee);
             this.pic = itemView.findViewById(R.id.pic);
             this.addBtn = itemView.findViewById(R.id.addBtn);
-            //this.addFavoriteBtn = itemView.findViewById(R.id.addFavoriteButton);
+            this.addFavoriteBtn = itemView.findViewById(R.id.addFavoriteButton);
+            this.openMerchantBtn = itemView.findViewById(R.id.popularViewHolder);
         }
     }
 }

@@ -10,11 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodyLayout">
         <activity
+            android:name=".Activity.MerchantActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.FoodListActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.SearchProductActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".Activity.OrderHistoryActivity"
             android:exported="false" />

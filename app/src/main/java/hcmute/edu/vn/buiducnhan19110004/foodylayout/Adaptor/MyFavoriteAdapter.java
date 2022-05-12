@@ -10,12 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity.MerchantActivity;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity.MyFavoritesActivity;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FavoriteDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
@@ -79,6 +81,14 @@ public class MyFavoriteAdapter extends RecyclerView.Adapter<MyFavoriteAdapter.Vi
                     notifyDataSetChanged();
                 }
             });
+            holder.openMerchantBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(holder.itemView.getContext(), MerchantActivity.class);
+                    intent.putExtra("productId", foodDomains.get(position).getId());
+                    holder.itemView.getContext().startActivity(intent);
+                }
+            });
         }
         catch (Exception e){
             System.out.println("No list read");
@@ -93,6 +103,7 @@ public class MyFavoriteAdapter extends RecyclerView.Adapter<MyFavoriteAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView favoritePic, removeBtn;
         TextView favoriteTitle, favoriteFee;
+        ConstraintLayout openMerchantBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -100,6 +111,7 @@ public class MyFavoriteAdapter extends RecyclerView.Adapter<MyFavoriteAdapter.Vi
             removeBtn = itemView.findViewById(R.id.removeFavoriteImageView);
             favoriteTitle = itemView.findViewById(R.id.favoriteTitleTxt);
             favoriteFee = itemView.findViewById(R.id.favoriteFeeTxt);
+            openMerchantBtn = itemView.findViewById(R.id.favoriteViewHolder);
         }
     }
 }
