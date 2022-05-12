@@ -59,6 +59,14 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull FoodListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        FavoriteDomain newFavorite = new FavoriteDomain(CurrentUser.getUser_id(), foodDomainArrayList.get(position).getId());
+        if(favoriteDB.isFavoriteExist(newFavorite) == true){
+            holder.addFavoriteBtn.setImageResource(R.drawable.red_heart);
+        }
+        else{
+            holder.addFavoriteBtn.setImageResource(R.drawable.like);
+        }
+
         holder.textViewFoodTitle.setText(foodDomainArrayList.get(position).getTitle());
         holder.textViewFee.setText(String.valueOf(foodDomainArrayList.get(position).getFee()));
         String picUrl = foodDomainArrayList.get(position).getPic();
@@ -78,8 +86,18 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.ViewHo
         holder.addFavoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                favoriteDB.InsertFavorite(new FavoriteDomain(CurrentUser.getUser_id(), foodDomainArrayList.get(position).getId()));
-                Toast.makeText(baseContext, "Insert favorite successfully", Toast.LENGTH_SHORT).show();
+                if(favoriteDB.isFavoriteExist(newFavorite) != true){
+                    holder.addFavoriteBtn.setImageResource(R.drawable.red_heart);
+                    favoriteDB.InsertFavorite(newFavorite);
+                    Toast.makeText(baseContext, "Insert favorite successfully", Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
+
+                }
+                else{
+                    holder.addFavoriteBtn.setImageResource(R.drawable.like);
+                    favoriteDB.DeleteFavorite(newFavorite);
+                    notifyDataSetChanged();
+                }
             }
         });
         holder.openMerchantBtn.setOnClickListener(new View.OnClickListener() {

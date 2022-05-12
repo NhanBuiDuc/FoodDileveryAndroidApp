@@ -35,7 +35,10 @@ public class ProfileActivity extends AppCompatActivity {
     Intent intent;
 
     private String phone, email, fullName, password;
-
+    @Override
+    public void onBackPressed() {
+        startActivity( new Intent(this, MainActivity.class));
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

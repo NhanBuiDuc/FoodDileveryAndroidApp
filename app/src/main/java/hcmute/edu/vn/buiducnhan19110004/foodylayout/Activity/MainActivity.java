@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewFastFood();
         bottomNavigation();
     }
+
     private void SetViews(){
         this.textViewUsername = findViewById(R.id.textViewUsername);
         textViewUsername.setText("Hello " + CurrentUser.getFull_name());
@@ -83,11 +84,15 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, SearchProductActivity.class);
                     intent.putExtra("searching_text", searching_text);
                     startActivity(intent);
-                    return true;
+                    onRestart();
                 }
                 return false;
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        startActivity( new Intent(this, MainActivity.class));
     }
     private void bottomNavigation() {
         FloatingActionButton floatingActionButton = findViewById(R.id.cartBtn);
@@ -106,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, MainActivity.class));
+                onRestart();
             }
         });
         profileButton.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(CurrentUser.isIsLogin() == false){
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    onRestart();
                 }
                 else {
                     Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
@@ -121,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("profile_email", CurrentUser.getEmail());
                     intent.putExtra("profile_password", CurrentUser.getPassword());
                     startActivity(intent);
+                    onRestart();
                 }
             }
         });
@@ -129,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, MyFavoritesActivity.class);
                 startActivity(intent);
+                onRestart();
             }
         });
         yourOrderButton.setOnClickListener(new View.OnClickListener() {

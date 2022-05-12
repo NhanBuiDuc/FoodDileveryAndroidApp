@@ -45,7 +45,10 @@ public class SearchProductActivity extends AppCompatActivity {
         SetView();
         SetRecyclerSearchViewFoodList();
     }
-
+    @Override
+    public void onBackPressed() {
+        startActivity( new Intent(this, MainActivity.class));
+    }
     private void SetRecyclerSearchViewFoodList() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewItemSearchList.setLayoutManager(linearLayoutManager);

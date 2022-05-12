@@ -55,6 +55,7 @@ public class CheckOutActivity extends AppCompatActivity {
         getBundle();
         initCartList();
     }
+
     private void setViews() {
         recyclerViewCheckOut = findViewById(R.id.recyclerViewCheckOut);
         CheckOut_textViewTotal = findViewById(R.id.CheckOut_textViewTotal);

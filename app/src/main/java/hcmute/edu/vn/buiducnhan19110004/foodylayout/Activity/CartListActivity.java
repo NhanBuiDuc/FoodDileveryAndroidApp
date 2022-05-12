@@ -44,7 +44,10 @@ public class CartListActivity extends AppCompatActivity {
         CalculateCart();
         bottomNavigation();
     }
-
+    @Override
+    public void onBackPressed() {
+        startActivity( new Intent(this, MainActivity.class));
+    }
     private void bottomNavigation() {
         FloatingActionButton floatingActionButton = findViewById(R.id.cartBtn);
         LinearLayout homeBtn = findViewById(R.id.homeBtn);

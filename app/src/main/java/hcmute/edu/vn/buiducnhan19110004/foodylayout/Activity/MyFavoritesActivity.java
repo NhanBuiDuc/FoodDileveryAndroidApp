@@ -44,7 +44,10 @@ public class MyFavoritesActivity extends AppCompatActivity {
 
         InitList();
     }
-
+    @Override
+    public void onBackPressed() {
+        startActivity( new Intent(this, MainActivity.class));
+    }
     private void InitList() {
         emptyTxt = findViewById(R.id.favoriteEmptyTxt);
         favoriteScrollView = findViewById(R.id.favoriteScrollView);

@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity.MerchantActivity;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity.MainActivity;
+
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity.ShowDetailActivity;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.CartDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FavoriteDB;
@@ -52,9 +54,17 @@ public class PopularAdaptor extends RecyclerView.Adapter<PopularAdaptor.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
+        FavoriteDomain newFavorite = new FavoriteDomain(CurrentUser.getUser_id(), popularFood.get(position).getId());
+
         holder.title.setText(popularFood.get(position).getTitle());
         holder.fee.setText(String.valueOf(popularFood.get(position).getFee()));
-
+        if(favoriteDB.isFavoriteExist(newFavorite) == true){
+            holder.addFavoriteBtn.setImageResource(R.drawable.red_heart);
+        }
+        else{
+            holder.addFavoriteBtn.setImageResource(R.drawable.like);
+        }
         int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(popularFood.get(position).getPic(), "drawable", holder.itemView.getContext().getPackageName());
 
         Glide.with(holder.itemView.getContext())
@@ -72,8 +82,18 @@ public class PopularAdaptor extends RecyclerView.Adapter<PopularAdaptor.ViewHold
         holder.addFavoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                favoriteDB.InsertFavorite(new FavoriteDomain(CurrentUser.getUser_id(), popularFood.get(position).getId()));
-                Toast.makeText(context, "Insert favorite successfully", Toast.LENGTH_SHORT).show();
+                if(favoriteDB.isFavoriteExist(newFavorite) != true){
+                    holder.addFavoriteBtn.setImageResource(R.drawable.red_heart);
+                    favoriteDB.InsertFavorite(newFavorite);
+                    Toast.makeText(context, "Insert favorite successfully", Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
+
+                }
+                else{
+                    holder.addFavoriteBtn.setImageResource(R.drawable.like);
+                    favoriteDB.DeleteFavorite(newFavorite);
+                    notifyDataSetChanged();
+                }
             }
         });
         holder.openMerchantBtn.setOnClickListener(new View.OnClickListener() {
