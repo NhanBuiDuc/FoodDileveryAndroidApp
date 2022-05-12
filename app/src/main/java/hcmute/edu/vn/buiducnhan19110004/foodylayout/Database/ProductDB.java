@@ -25,15 +25,15 @@ public class ProductDB {
     }
     public long InsertProduct(FoodDomain foodDomain){
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
-        db.beginTransaction();
         try{
+
             ContentValues contentValues = new ContentValues();
             contentValues.putNull(first_col);
             contentValues.put(second_col, foodDomain.getTitle());
             contentValues.put(third_col, foodDomain.getPic());
             contentValues.put(forth_col, foodDomain.getDescription());
             contentValues.put(fifth_col, foodDomain.getFee());
-            
+            db.beginTransaction();
             Long row = db.insertOrThrow(TABLE_NAME, null, contentValues);
             db.setTransactionSuccessful();
             db.endTransaction();
@@ -47,7 +47,6 @@ public class ProductDB {
     }
     public void DeleteProduct(int ID){
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
-        db.beginTransaction();
         try{
             db.delete(TABLE_NAME, "id = ?", new String[]{String.valueOf(ID)} );
             System.out.println("Delete at id" + ID + " from table " + TABLE_NAME);
@@ -60,8 +59,8 @@ public class ProductDB {
     public void DeleteAllProducts(){
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
         try{
-            db.delete(TABLE_NAME, null, null);
-           System.out.println("Delete all product from " + TABLE_NAME);
+            int affected_row = db.delete(TABLE_NAME, null, null);
+            System.out.println("Delete all product from " + TABLE_NAME + " affected row = " + affected_row);
         }
         catch (SQLiteConstraintException e){
             System.out.println("Delete failed from " + TABLE_NAME);
@@ -73,9 +72,10 @@ public class ProductDB {
         String[] projection = {first_col, second_col, third_col, forth_col, fifth_col};
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
         Cursor cursor;
-        db.beginTransaction();
         try{
+            db.beginTransaction();
             cursor = db.query(TABLE_NAME, projection, null, null, null, null, null);
+            db.endTransaction();
             while (cursor.moveToNext()){
                 int id = cursor.getInt(0);
                 String name = cursor.getString(1);
@@ -93,12 +93,10 @@ public class ProductDB {
                 returnList.add(food);
             }
             System.out.println("Get " + returnList.size() + " rows of data successfully from table " + TABLE_NAME);
-            db.endTransaction();
             return returnList;
         }
         catch (SQLiteConstraintException e){
             System.out.println("Get data failed from table " + TABLE_NAME);
-            db.endTransaction();
             return null;
         }
     }
@@ -108,9 +106,10 @@ public class ProductDB {
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
 
         Cursor cursor;
-        db.beginTransaction();
         try{
+            db.beginTransaction();
             cursor = db.query(TABLE_NAME, projection, "name = ? ", new String[]{productName}, null, null, null);
+            db.endTransaction();
             cursor.moveToNext();
 
             int id = cursor.getInt(0);
@@ -128,13 +127,11 @@ public class ProductDB {
             food = new FoodDomain(id, name, pic, description, price);
 
             System.out.println("Get data at ID: " + id + " successfully from table " + TABLE_NAME);
-            db.endTransaction();
             return food;
             }
         catch (SQLiteConstraintException e){
             System.out.println(e);
             System.out.println("Get data failed from table " + TABLE_NAME);
-            db.endTransaction();
             return null;
         }
     }
@@ -144,9 +141,10 @@ public class ProductDB {
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
         //
         Cursor cursor;
-        db.beginTransaction();
         try{
+            db.beginTransaction();
             cursor = db.query(TABLE_NAME, projection, TABLE_NAME +".id = ? ", new String[]{String.valueOf(productID)}, null, null, null);
+            db.endTransaction();
             cursor.moveToNext();
 
             int id = cursor.getInt(0);
@@ -164,17 +162,15 @@ public class ProductDB {
             food = new FoodDomain(id, name, pic, description, price);
 
             System.out.println("Get data at ID: " + id + " successfully from table " + TABLE_NAME);
-            db.endTransaction();
             return food;
         }
         catch (SQLiteConstraintException e){
             System.out.println(e);
             System.out.println("Get data failed from table " + TABLE_NAME);
-            db.endTransaction();
             return null;
         }
     }
-    public ArrayList<FoodDomain> SearchProductByName(String productName){
+    public ArrayList<FoodDomain> SearchProductByKeyWord(String productName){
         ArrayList<FoodDomain> returnList = new ArrayList<FoodDomain>();
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
         String[] projection = {first_col, second_col, third_col, forth_col, fifth_col};
@@ -188,12 +184,24 @@ public class ProductDB {
                 "or " +
                 "UPPER(name) LIKE UPPER('_" + productName + "') " +
                 "or " +
-                "UPPER(name) LIKE UPPER('_" + productName + "_')";
+                "UPPER(name) LIKE UPPER('_" + productName + "_') " +
+                        "or " +
+                        "UPPER(description) LIKE UPPER('" + productName + "%') " +
+                        "or " +
+                        "UPPER(description) LIKE UPPER('%" + productName + "%') " +
+                        "or " +
+                        "UPPER(description) LIKE UPPER('" + productName + "_') " +
+                        "or " +
+                        "UPPER(description) LIKE UPPER('_" + productName + "') " +
+                        "or " +
+                        "UPPER(description) LIKE UPPER('_" + productName + "_')";
+
 
         Cursor cursor;
-        db.beginTransaction();
         try{
+            db.beginTransaction();
             cursor = db.query(TABLE_NAME, projection, query, null, null, null, null);
+            db.endTransaction();
             while (cursor.moveToNext()){
                 int id = cursor.getInt(0);
                 String name = cursor.getString(1);
@@ -211,12 +219,10 @@ public class ProductDB {
                 returnList.add(food);
             }
             System.out.println("Get " + returnList.size() + " rows of data successfully from table " + TABLE_NAME);
-            db.endTransaction();
             return returnList;
         }
         catch (SQLiteConstraintException e){
             System.out.println("Get data failed from table " + TABLE_NAME);
-            db.endTransaction();
             return null;
         }
     }

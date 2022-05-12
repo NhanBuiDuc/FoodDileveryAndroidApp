@@ -1,6 +1,8 @@
 package hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain;
 
-public class CategoryDomain {
+import java.io.Serializable;
+
+public class CategoryDomain implements Serializable {
     private int id;
     private String title;
     private String pic;

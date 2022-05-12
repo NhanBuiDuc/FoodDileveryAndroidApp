@@ -105,7 +105,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="11dp"
                     android:text="Change"
-                    android:textColor="@color/teal_200"
+                    android:textColor="@color/design_default_color_error"
                     android:textSize="10sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/imageViewSelect"
@@ -153,60 +153,9 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                android:background="@drawable/lightblue_background">
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="11dp"
-                    android:text="Are you sure your address is correct?"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/textView4"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/imageView3"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView5"
-                    app:srcCompat="@drawable/location_pointer" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="Your current address is far from your current location."
-                    android:textSize="12sp"
-                    android:textStyle="italic"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/textView5"
-                    app:layout_constraintStart_toStartOf="@+id/imageView3"
-                    app:layout_constraintTop_toBottomOf="@+id/textView5"
-                    app:layout_constraintVertical_bias="0.0" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="24dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -219,8 +168,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewCheckOut"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="24dp">
+                    android:layout_height="match_parent">
 
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -314,7 +262,7 @@
                             android:layout_marginEnd="32dp"
                             android:layout_marginBottom="10dp"
                             android:text="Add Promo Code"
-                            android:textColor="#068194"
+                            android:textColor="#CE1BD5"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -392,7 +340,6 @@ sss
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/textView10"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="24dp"
@@ -420,13 +367,13 @@ sss
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/textView11"
+                            android:id="@+id/CheckOut_textViewOrder"
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="24dp"
                             android:layout_marginBottom="10dp"
                             android:layout_weight="1"
-                            android:background="@drawable/order_blue_background"
+                            android:background="@drawable/orange_button"
                             android:gravity="center"
                             android:text="ORDER"
                             android:textColor="#ffffff"

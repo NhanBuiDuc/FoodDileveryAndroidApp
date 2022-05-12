@@ -10,7 +10,11 @@
     <ScrollView
         android:id="@+id/Detail_scrollViewMain"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/Detail_LinearLayoutMain"
@@ -19,7 +23,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/titleTxt"
+                android:id="@+id/textViewTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
@@ -41,14 +45,17 @@
 
             <ImageView
                 android:id="@+id/picfood"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/pizza" />
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                app:srcCompat="@drawable/pizza"
+                android:layout_gravity="center"/>
 
             <LinearLayout
                 android:id="@+id/Detail_LinearLayoutQuantity"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -83,25 +90,41 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="description"
+                android:layout_marginBottom="20dp"
                 android:textColor="#686767"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
 
-    <TextView
-        android:id="@+id/addToCartBtn"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/orange_button"
-        android:elevation="3dp"
-        android:gravity="center"
-        android:text="Add to Cart"
-        android:textColor="#ffffff"
-        android:textSize="23sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/Detail_scrollViewMain"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Detail_scrollViewMain"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:id="@+id/addToCartBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/orange_button"
+            android:elevation="3dp"
+            android:gravity="center"
+            android:text="Add to Cart"
+            android:textColor="#ffffff"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Detail_scrollViewMain" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

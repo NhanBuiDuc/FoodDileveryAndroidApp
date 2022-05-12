@@ -23,27 +23,30 @@ public class CategoryDB {
 
     public long InsertCategory(CategoryDomain categoryDomain){
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
-        db.beginTransaction();
+
         try{
+
             ContentValues contentValues = new ContentValues();
             contentValues.putNull(first_col);
             contentValues.put(second_col, categoryDomain.getTitle());
             contentValues.put(third_col, categoryDomain.getPic());
-
+            db.beginTransaction();
             Long row = db.insertOrThrow(TABLE_NAME, null, contentValues);
             db.setTransactionSuccessful();
             db.endTransaction();
             System.out.println("ID is " + row + " was inserted into table " + TABLE_NAME);
+
             return row;
         }
+
         catch (SQLiteConstraintException e){
             System.out.println("Insert failed to table " + TABLE_NAME);
             return -1;
+
         }
     }
     public void DeleteCategory(int ID){
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
-        db.beginTransaction();
         try{
             db.delete(TABLE_NAME, "id = ?", new String[]{String.valueOf(ID)} );
             System.out.println("Delete at id" + ID + " from table " + TABLE_NAME);
@@ -57,6 +60,7 @@ public class CategoryDB {
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
         try{
             db.delete(TABLE_NAME, null, null);
+
             System.out.println("Delete all categories");
         }
         catch (SQLiteConstraintException e){
@@ -69,9 +73,10 @@ public class CategoryDB {
         String[] projection = {first_col, second_col, third_col};
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
         Cursor cursor;
-        db.beginTransaction();
         try{
+            db.beginTransaction();
             cursor = db.query(TABLE_NAME, projection, null, null, null, null, null);
+            db.endTransaction();
             while (cursor.moveToNext()){
                 int id = cursor.getInt(0);
                 String title = cursor.getString(1);
@@ -83,14 +88,12 @@ public class CategoryDB {
 
                 CategoryDomain category = new CategoryDomain(id, title, pic);
                 returnList.add(category);
+                System.out.println("Get " + returnList.size() + " rows of data from " + TABLE_NAME + " successfully");
             }
-            System.out.println("Get " + returnList.size() + " rows of data from " + TABLE_NAME + " successfully");
-            db.endTransaction();
             return returnList;
         }
         catch (SQLiteConstraintException e){
             System.out.println("Get data failed from table " + TABLE_NAME);
-            db.endTransaction();
             return null;
         }
     }

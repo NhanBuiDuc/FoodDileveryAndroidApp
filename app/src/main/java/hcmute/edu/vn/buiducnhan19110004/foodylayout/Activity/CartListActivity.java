@@ -15,7 +15,6 @@ import hcmute.edu.vn.buiducnhan19110004.foodylayout.Adaptor.CartListAdapter;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.CartDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.CartDomain;
-import hcmute.edu.vn.buiducnhan19110004.foodylayout.Interface.ChangeNumberItemsListener;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -49,12 +48,6 @@ public class CartListActivity extends AppCompatActivity {
         FloatingActionButton floatingActionButton = findViewById(R.id.cartBtn);
         LinearLayout homeBtn = findViewById(R.id.homeBtn);
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(CartListActivity.this, CartListActivity.class));
-            }
-        });
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +69,18 @@ public class CartListActivity extends AppCompatActivity {
         textViewCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                double percentTax = 0.02;
+                double delivery = 10;
+
+                double tax = Math.round((cartDB.CalculateCart() * percentTax) * 100) / 100;
+                double total = Math.round((cartDB.CalculateCart() + tax + delivery) * 100) / 100;
+                double itemTotal = Math.round(cartDB.CalculateCart() * 100) / 100;
+
                 Intent intent = new Intent(CartListActivity.this, CheckOutActivity.class);
+                intent.putExtra("sumAllItems", itemTotal);
+                intent.putExtra("deliveryFee", delivery);
+                intent.putExtra("tax", tax);
+                intent.putExtra("total", total);
                 startActivity(intent);
             }
         });
@@ -85,8 +89,7 @@ public class CartListActivity extends AppCompatActivity {
     private void initList() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewList.setLayoutManager(linearLayoutManager);
-        cartDomainArrayList = cartDB.SelectAllItemsInCart();
-
+        cartDomainArrayList = cartDB.SelectAllItemsInCartOfCurrentUser();
         adapter = new CartListAdapter(foodyDBHelper, cartDomainArrayList, CartListActivity.this);
 
         recyclerViewList.setAdapter(adapter);
@@ -102,17 +105,24 @@ public class CartListActivity extends AppCompatActivity {
     }
 
     public void CalculateCart() {
+        if(cartDB.CountCart() > 0){
+            double percentTax = 0.02;
+            double delivery = 10;
 
-        double percentTax = 0.02;
-        double delivery = 10;
+            double tax = Math.round((cartDB.CalculateCart() * percentTax) * 100) / 100;
+            double total = Math.round((cartDB.CalculateCart() + tax + delivery) * 100) / 100;
+            double itemTotal = Math.round(cartDB.CalculateCart() * 100) / 100;
 
-        double tax = Math.round((cartDB.CalculateCart() * percentTax) * 100) / 100;
-        double total = Math.round((cartDB.CalculateCart() + tax + delivery) * 100) / 100;
-        double itemTotal = Math.round(cartDB.CalculateCart() * 100) / 100;
-
-        totalFeeTxt.setText("$" + itemTotal);
-        taxTxt.setText("$" + tax);
-        deliveryTxt.setText("$" + delivery);
-        totalTxt.setText("$" + total);
+            totalFeeTxt.setText("$" + itemTotal);
+            taxTxt.setText("$" + tax);
+            deliveryTxt.setText("$" + delivery);
+            totalTxt.setText("$" + total);
+        }
+        else{
+            totalFeeTxt.setText("$" + 0);
+            taxTxt.setText("$" + 0);
+            deliveryTxt.setText("$" + 0);
+            totalTxt.setText("$" + 0);
+        }
     }
 }
