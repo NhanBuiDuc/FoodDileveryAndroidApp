@@ -98,7 +98,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
         holder.minusItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(cartItem.getQuantity() > 0){
+                if(cartItem.getQuantity() > 1){
                     int current_quantity = cartDomains.get(position).getQuantity();
                     cartDomains.get(position).setQuantity(current_quantity - 1);
                     holder.numberItemTxt.setText(String.valueOf( cartItem.getQuantity() - 1) );
