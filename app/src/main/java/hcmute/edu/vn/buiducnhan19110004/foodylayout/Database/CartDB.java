@@ -112,6 +112,7 @@ public class CartDB {
 
                 System.out.println("Get " + returnList.size() + " rows of data from " + TABLE_NAME + " successfully");
             }
+            cursor.close();
             return returnList;
         }
         catch (SQLiteConstraintException e){
@@ -184,6 +185,7 @@ public class CartDB {
             System.out.println("Product_id: "+ product_id);
             System.out.println("Quantity: "+ quantity);
 
+            cursor.close();
 
             cartItem = new CartDomain(user_id, product_id, quantity);
 

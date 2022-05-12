@@ -11,7 +11,7 @@
     android:elevation="3dp">
 
     <ImageView
-        android:id="@+id/picMerchant"
+        android:id="@+id/favoritePic"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
@@ -23,7 +23,7 @@
         android:src="@drawable/pop_1"/>
 
     <TextView
-        android:id="@+id/titleTextView"
+        android:id="@+id/favoriteTitleTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -33,12 +33,12 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/picMerchant"
+        app:layout_constraintLeft_toRightOf="@id/favoritePic"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.05"/>
 
     <TextView
-        android:id="@+id/subTitleTextView"
+        android:id="@+id/favoriteFeeTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -47,8 +47,18 @@
         android:textColor="#B1B1B5"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView"
-        app:layout_constraintLeft_toRightOf="@id/picMerchant"
+        app:layout_constraintTop_toBottomOf="@id/favoriteTitleTxt"
+        app:layout_constraintLeft_toRightOf="@id/favoritePic"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.05"/>
+
+    <ImageView
+        android:id="@+id/removeFavoriteImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic__trash"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/favoriteTitleTxt"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

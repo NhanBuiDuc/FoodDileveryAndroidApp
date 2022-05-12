@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity.ShowDetailActivity;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.CartDB;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FavoriteDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.CartDomain;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.FavoriteDomain;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.FoodDomain;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Helper.CurrentUser;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.R;
@@ -29,12 +31,14 @@ public class PopularAdaptor extends RecyclerView.Adapter<PopularAdaptor.ViewHold
     ArrayList<FoodDomain> popularFood;
     Context context;
     CartDB cartDB;
+    FavoriteDB favoriteDB;
 
     public PopularAdaptor(ArrayList<FoodDomain> popularFood, Context context) {
         this.popularFood = popularFood;
         this.context = context;
         this.foodyDBHelper = new FoodyDBHelper(context);
         this.cartDB = new CartDB(foodyDBHelper);
+        this.favoriteDB = new FavoriteDB(foodyDBHelper);
     }
 
     @Override
@@ -62,6 +66,12 @@ public class PopularAdaptor extends RecyclerView.Adapter<PopularAdaptor.ViewHold
                 holder.itemView.getContext().startActivity(intent);
             }
         });
+//        holder.addFavoriteBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                favoriteDB.InsertFavorite(new FavoriteDomain(CurrentUser.getUser_id(), popularFood.get(position).getId()));
+//            }
+//        });
     }
 
     @Override
@@ -70,16 +80,17 @@ public class PopularAdaptor extends RecyclerView.Adapter<PopularAdaptor.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title, fee;
+        TextView title, fee, addFavoriteBtn;
         ImageView pic;
         TextView addBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.title);
-            fee = itemView.findViewById(R.id.fee);
-            pic = itemView.findViewById(R.id.pic);
-            addBtn = itemView.findViewById(R.id.addBtn);
+            this.title = itemView.findViewById(R.id.title);
+            this.fee = itemView.findViewById(R.id.fee);
+            this.pic = itemView.findViewById(R.id.pic);
+            this.addBtn = itemView.findViewById(R.id.addBtn);
+            //this.addFavoriteBtn = itemView.findViewById(R.id.addFavoriteButton);
         }
     }
 }

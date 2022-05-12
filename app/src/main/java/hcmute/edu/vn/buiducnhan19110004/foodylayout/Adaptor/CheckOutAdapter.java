@@ -29,13 +29,13 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapter.ViewHo
     private CartDB cartDB;
     private ProductDB productDB;
     // Constructor
-    public CheckOutAdapter(Context context) {
+    public CheckOutAdapter(FoodyDBHelper foodyDBHelper, ArrayList<CartDomain> cartDomainArrayList, Context context) {
         this.context = context;
 
-        this.foodyDBHelper = new FoodyDBHelper(context);
+        this.foodyDBHelper = foodyDBHelper;
         this.cartDB = new CartDB(this.foodyDBHelper);
         this.productDB = new ProductDB(this.foodyDBHelper);
-        this.cartDomainArrayList = this.cartDB.SelectAllItemsInCartOfCurrentUser();
+        this.cartDomainArrayList = cartDomainArrayList;
     }
 
     @NonNull

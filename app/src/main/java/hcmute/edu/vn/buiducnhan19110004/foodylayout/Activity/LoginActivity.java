@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         rememberMeCheckbox = findViewById(R.id.rememberMeCheckbox);
         forgotPassTxt = findViewById(R.id.forgotPasswordTextView);
         registerDirectTxt = findViewById(R.id.registerDirectTextView);
-        loginBtn = findViewById(R.id.loginBtn);
+        loginBtn = findViewById(R.id.loginButton);
 
         emailLogin.setText(loginSharedPreferences.getString("email", ""));
         passLogin.setText(loginSharedPreferences.getString("pass", ""));
@@ -78,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
         pass = passLogin.getText().toString().trim();
 
         if(userDb.CheckLoginUser(email, pass)) {
-            //write code to direct to main page
 
             if(rememberMeCheckbox.isChecked()) {
                 SharedPreferences.Editor editor = loginSharedPreferences.edit();

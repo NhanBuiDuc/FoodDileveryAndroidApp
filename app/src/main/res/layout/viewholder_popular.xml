@@ -57,6 +57,15 @@
         app:layout_constraintEnd_toStartOf="@+id/fee"
         app:layout_constraintTop_toBottomOf="@+id/pic" />
 
+    <ImageView
+        android:id="@+id/addFavoriteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/like"
+        app:layout_constraintTop_toBottomOf="@id/fee"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/pic"/>
+
     <TextView
         android:id="@+id/addBtn"
         android:layout_width="wrap_content"
@@ -72,6 +81,5 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/pic"
-        app:layout_constraintStart_toStartOf="@+id/pic"
         app:layout_constraintTop_toBottomOf="@+id/fee" />
 </androidx.constraintlayout.widget.ConstraintLayout>

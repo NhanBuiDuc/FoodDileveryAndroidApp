@@ -48,6 +48,9 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
             for(CartDomain cartItem: cartDomains){
                 FoodDomain food;
                 food = productDB.SelectProductByID(cartItem.getProduct_id());
+                if(food == null) {
+                    System.out.println("Can't get food from DB!");
+                }
                 this.foodDomains.add(food);
             }
         }
@@ -64,61 +67,49 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        FoodDomain foodItem = productDB.SelectProductByID( foodDomains.get(position).getId() );
-        CartDomain cartItem = cartDB.SelectCartByProductID( foodDomains.get(position).getId() );
+        try {
+            FoodDomain foodItem = productDB.SelectProductByID(foodDomains.get(position).getId());
+            CartDomain cartItem = cartDB.SelectCartByProductID(foodDomains.get(position).getId());
 
-        holder.title.setText(foodItem.getTitle());
-        holder.feeEachItem.setText( String.valueOf(foodItem.getFee()) );
-        holder.totalEachItem.setText( String.valueOf( Math.round( ( cartItem.getQuantity() * foodItem.getFee() ) * 100) / 100) );
-        holder.numberItemTxt.setText(String.valueOf( cartItem.getQuantity() ));
-        int drawableResourceId =holder.itemView.getContext().getResources().getIdentifier( foodItem.getPic(), "drawable", holder.itemView.getContext().getPackageName());
-//        holder.title.setText(foodDomains.get(position).getTitle());
-//        holder.feeEachItem.setText(String.valueOf(foodDomains.get(position).getFee()));
-//        holder.totalEachItem.setText(String.valueOf(Math.round((cartDB.CountCartItem() * foodDomains.get(position).getFee()) * 100) / 100));
-//        holder.numberItemTxt.setText(String.valueOf(cartDB.SelectCartByProductID(foodDomains.get(position).getId()).getQuantity()));
-//        int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(foodDomains.get(position).getPic()
-//                , "drawable", holder.itemView.getContext().getPackageName());
+            holder.title.setText(foodItem.getTitle());
+            holder.feeEachItem.setText(String.valueOf(foodItem.getFee()));
+            holder.totalEachItem.setText(String.valueOf((cartItem.getQuantity() * foodItem.getFee() * 100) / 100));
+            holder.numberItemTxt.setText(String.valueOf(cartItem.getQuantity()));
+            int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(foodItem.getPic(), "drawable", holder.itemView.getContext().getPackageName());
 
-        Glide.with(holder.itemView.getContext())
-                .load(drawableResourceId)
-                .into(holder.pic);
+            Glide.with(holder.itemView.getContext())
+                    .load(drawableResourceId)
+                    .into(holder.pic);
 
-        holder.plusItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int current_quantity = cartDomains.get(position).getQuantity();
-                cartDomains.get(position).setQuantity(current_quantity + 1);
-                holder.numberItemTxt.setText(String.valueOf( current_quantity + 1) );
-                cartDB.PlusOneQuantity(foodItem.getId());
-                cartListActivity.CalculateCart();
-                notifyDataSetChanged();
-            }
-        });
-
-        holder.minusItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(cartItem.getQuantity() > 1){
+            holder.plusItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
                     int current_quantity = cartDomains.get(position).getQuantity();
-                    cartDomains.get(position).setQuantity(current_quantity - 1);
-                    holder.numberItemTxt.setText(String.valueOf( cartItem.getQuantity() - 1) );
-                    cartDB.MinusOneQuantity(foodDomains.get(position).getId());
+                    cartDomains.get(position).setQuantity(current_quantity + 1);
+                    holder.numberItemTxt.setText(String.valueOf(current_quantity + 1));
+                    cartDB.PlusOneQuantity(foodItem.getId());
                     cartListActivity.CalculateCart();
                     notifyDataSetChanged();
                 }
-            }
-        });
-        holder.removeCartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cartDB.DeleteCartItemByID(cartItem.getProduct_id());
-                foodDomains.remove(position);
-                cartDomains.remove(position);
-                notifyItemRemoved(position);
-                cartListActivity.CalculateCart();
-                notifyDataSetChanged();
-            }
-        });
+            });
+
+            holder.minusItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (cartItem.getQuantity() > 1) {
+                        int current_quantity = cartDomains.get(position).getQuantity();
+                        cartDomains.get(position).setQuantity(current_quantity - 1);
+                        holder.numberItemTxt.setText(String.valueOf(cartItem.getQuantity() - 1));
+                        cartDB.MinusOneQuantity(foodDomains.get(position).getId());
+                        cartListActivity.CalculateCart();
+                        notifyDataSetChanged();
+                    }
+                }
+            });
+        }
+        catch (Exception e){
+            System.out.println("No list read");
+        }
     }
 
     @Override
@@ -126,8 +117,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
         return foodDomains.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView removeCartBtn;
+    public class ViewHolder extends  RecyclerView.ViewHolder {
         TextView title, feeEachItem;
         ImageView pic, plusItem, minusItem;
         TextView totalEachItem, numberItemTxt;
@@ -141,7 +131,6 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
             numberItemTxt = itemView.findViewById(R.id.numberItemTxt);
             plusItem = itemView.findViewById(R.id.plusCartBtn);
             minusItem = itemView.findViewById(R.id.minusCartBtn);
-            removeCartBtn = itemView.findViewById(R.id.removeCartBtn);
         }
     }
 }

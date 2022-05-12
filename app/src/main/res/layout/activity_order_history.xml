@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="15dp"
     android:orientation="vertical"
-    tools:context=".Activity.MyFavoritesActivity">
+    tools:context=".Activity.OrderHistoryActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
             android:id="@+id/favoriteTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="My Favorites"
+            android:text="Order History"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="20sp"
@@ -38,25 +38,26 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/favoriteEmptyTxt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="You haven't added anything yet"
-        android:textSize="25sp"
-        android:layout_marginTop="40dp"
-        android:visibility="gone"/>
-
     <ScrollView
-        android:id="@+id/favoriteScrollView"
+        android:id="@+id/orderHistoryScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/favoriteRecyclerView"
+            android:id="@+id/orderHistoryRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/emptyTextOrderHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="You haven't ordered anything yet"
+        android:textSize="25sp"
+        android:layout_marginTop="40dp"
+        android:visibility="gone"/>
+
 </LinearLayout>
