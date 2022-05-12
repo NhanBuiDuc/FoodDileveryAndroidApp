@@ -108,6 +108,17 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
                 }
             }
         });
+        holder.removeCartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cartDB.DeleteCartItemByID(cartItem.getProduct_id());
+                foodDomains.remove(position);
+                cartDomains.remove(position);
+                notifyItemRemoved(position);
+                cartListActivity.CalculateCart();
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -116,19 +127,21 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView removeCartBtn;
         TextView title, feeEachItem;
         ImageView pic, plusItem, minusItem;
         TextView totalEachItem, numberItemTxt;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.titleTxt);
+            title = itemView.findViewById(R.id.textViewTitle);
             feeEachItem = itemView.findViewById(R.id.feeEachItem);
             pic = itemView.findViewById(R.id.picCart);
-            totalEachItem = itemView.findViewById(R.id.totalEachItem);
+            totalEachItem = itemView.findViewById(R.id.textViewItemTotal);
             numberItemTxt = itemView.findViewById(R.id.numberItemTxt);
             plusItem = itemView.findViewById(R.id.plusCartBtn);
             minusItem = itemView.findViewById(R.id.minusCartBtn);
+            removeCartBtn = itemView.findViewById(R.id.removeCartBtn);
         }
     }
 }

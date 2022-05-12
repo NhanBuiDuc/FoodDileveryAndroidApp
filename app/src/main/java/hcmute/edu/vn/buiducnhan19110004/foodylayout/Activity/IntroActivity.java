@@ -43,7 +43,7 @@ public class IntroActivity extends AppCompatActivity {
         InsertFood();
         InsertCategory();
         AutomaticInsertFoodVariation();
-        DeleteAllCart();
+        // DeleteAllCart();
 
         startBtn=findViewById(R.id.startBtn);
         startBtn.setOnClickListener(new View.OnClickListener() {
