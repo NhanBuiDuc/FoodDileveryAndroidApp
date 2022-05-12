@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity.MainActivity;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity.MyFavoritesActivity;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FavoriteDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
@@ -33,6 +34,7 @@ public class MyFavoriteAdapter extends RecyclerView.Adapter<MyFavoriteAdapter.Vi
     private FavoriteDB favoriteDB;
     private ProductDB productDB;
 
+    MainActivity mainActivity;
     private Context context;
 
     public MyFavoriteAdapter(FoodyDBHelper foodyDBHelper, ArrayList<FavoriteDomain> favoriteDomains, Context context) {

@@ -10,6 +10,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.FavoriteDomain;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.UserDomain;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Helper.CurrentUser;
 
 public class FavoriteDB {
@@ -127,7 +128,17 @@ public class FavoriteDB {
             return;
         }
     }
+    public void DeleteFavorite(FavoriteDomain favoriteDomain) {
+        SQLiteDatabase db = this.dbHelper.getWritableDatabase();
 
+        try{
+            db.delete(TABLE_NAME, "user_id = ? AND product_id = ?", new String[]{String.valueOf(favoriteDomain.getUser_id()), String.valueOf(favoriteDomain.getProduct_id())});
+        }
+        catch (SQLiteConstraintException e){
+            System.out.println("Delete failed at product_id = " + favoriteDomain.getProduct_id() + " from table and user id = " + favoriteDomain.getUser_id() + " at " + TABLE_NAME);
+            return;
+        }
+    }
     public void DeleteFavoriteByProductId(int productId) {
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
 
@@ -152,5 +163,14 @@ public class FavoriteDB {
             System.out.println("Delete failed in favorite where user_id = " + CurrentUser.getUser_id());
             return;
         }
+    }
+    public boolean isFavoriteExist(FavoriteDomain favorite) {
+        ArrayList<FavoriteDomain> favoriteDomains = this.SelectAllFavorites();
+        for (FavoriteDomain item : favoriteDomains) {
+            if(favorite.getProduct_id() == item.getProduct_id() && favorite.getUser_id() == item.getUser_id())
+                return true;
+        }
+
+        return false;
     }
 }

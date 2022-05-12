@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -40,7 +41,10 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
         InitList();
     }
-
+    @Override
+    public void onBackPressed() {
+        startActivity( new Intent(this, MainActivity.class));
+    }
     private void InitList() {
         orderHistoryScrollView = findViewById(R.id.orderHistoryScrollView);
         orderHistoryRecyclerView = findViewById(R.id.orderHistoryRecyclerView);

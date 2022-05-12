@@ -86,7 +86,6 @@ public class IntroActivity extends AppCompatActivity {
         catch (Exception e){
             System.out.println(e);
         }
-        productDB.SelectAllProducts();
 
         foodList.add(new FoodDomain("KFC Chicken Burger", "burger1", "The unique combination of the super soft Burger and the crispy crust of the bold Zinger creates an incredibly delicious taste. In addition, the strange harmony between Burger with Kim Chi mixed cabbage and fresh vegetables makes the dish even better.", 8.76));
         foodList.add(new FoodDomain("Lotte Cheese Burger", "burger2", "Burger believers will definitely stand still because Lotteria launches a super quality discount code on VinID Voucher. With only 36,000 VND, you will enjoy a huge Big Star Burger. What are you waiting for, access the VinID application to find out the promotional Lotteria information right away!", 2.9));

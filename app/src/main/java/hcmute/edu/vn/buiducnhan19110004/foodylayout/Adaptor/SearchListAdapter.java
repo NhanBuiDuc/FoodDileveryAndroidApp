@@ -50,8 +50,16 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        FavoriteDomain newFavorite = new FavoriteDomain(CurrentUser.getUser_id(), foodDomainArrayList.get(position).getId());
+
         holder.textViewFoodTitle.setText(foodDomainArrayList.get(position).getTitle());
         holder.textViewFee.setText(String.valueOf(foodDomainArrayList.get(position).getFee()));
+        if(favoriteDB.isFavoriteExist(newFavorite) == true){
+            holder.addFavoriteBtn.setImageResource(R.drawable.red_heart);
+        }
+        else{
+            holder.addFavoriteBtn.setImageResource(R.drawable.like);
+        }
         String picUrl = foodDomainArrayList.get(position).getPic();
         int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(picUrl, "drawable", holder.itemView.getContext().getPackageName());
         Glide.with(holder.itemView.getContext())
@@ -68,8 +76,18 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
         holder.addFavoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                favoriteDB.InsertFavorite(new FavoriteDomain(CurrentUser.getUser_id(), foodDomainArrayList.get(position).getId()));
-                Toast.makeText(baseContext, "Insert favorite successfully", Toast.LENGTH_SHORT).show();
+                if(favoriteDB.isFavoriteExist(newFavorite) != true){
+                    holder.addFavoriteBtn.setImageResource(R.drawable.red_heart);
+                    favoriteDB.InsertFavorite(newFavorite);
+                    Toast.makeText(baseContext, "Insert favorite successfully", Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
+
+                }
+                else{
+                    holder.addFavoriteBtn.setImageResource(R.drawable.like);
+                    favoriteDB.DeleteFavorite(newFavorite);
+                    notifyDataSetChanged();
+                }
             }
         });
     }

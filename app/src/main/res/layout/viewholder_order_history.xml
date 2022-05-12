@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
@@ -27,79 +28,84 @@
         android:id="@+id/titleOrderHistoryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
         android:layout_marginTop="5dp"
+        android:layout_marginStart="16dp"
+        android:maxEms="6"
         android:text="title"
         android:textColor="#373b54"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@id/picOrderHistoryImageView"
-        app:layout_constraintLeft_toRightOf="@id/picOrderHistoryImageView"/>
+        app:layout_constraintLeft_toRightOf="@id/picOrderHistoryImageView"
+        app:layout_constraintTop_toTopOf="@id/picOrderHistoryImageView" />
 
     <ImageView
         android:id="@+id/quantityImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/boxes"
-        android:layout_marginStart="4dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/boxes"
+        app:layout_constraintBottom_toTopOf="@+id/orderDateImageView"
         app:layout_constraintLeft_toRightOf="@id/picOrderHistoryImageView"
-        app:layout_constraintTop_toBottomOf="@id/titleOrderHistoryTextView"/>
+        app:layout_constraintTop_toBottomOf="@id/titleOrderHistoryTextView" />
 
     <TextView
         android:id="@+id/quantityOrderHistoryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:maxEms="6"
         android:text="quantity"
         android:textSize="17sp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
         app:layout_constraintLeft_toRightOf="@id/quantityImageView"
-        app:layout_constraintTop_toBottomOf="@id/titleOrderHistoryTextView"/>
-    
+        app:layout_constraintTop_toBottomOf="@id/titleOrderHistoryTextView" />
+
     <ImageView
         android:id="@+id/orderDateImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:src="@drawable/calendar"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="5dp"
         app:layout_constraintLeft_toRightOf="@id/picOrderHistoryImageView"
-        app:layout_constraintTop_toBottomOf="@id/quantityImageView"/>
+        app:layout_constraintStart_toStartOf="@+id/quantityImageView"
+        app:layout_constraintTop_toBottomOf="@id/quantityImageView" />
 
     <TextView
         android:id="@+id/orderDateOrderHistoryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:maxEms="6"
         android:text="Order Date"
         android:textSize="17sp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
         app:layout_constraintLeft_toRightOf="@id/orderDateImageView"
-        app:layout_constraintTop_toBottomOf="@id/quantityImageView"/>
+        app:layout_constraintTop_toBottomOf="@id/quantityImageView" />
 
     <TextView
         android:id="@+id/textViewDollarSign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="8dp"
         android:text="$"
         android:textColor="#ff3d00"
         android:textSize="18sp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@+id/feeOrderHistoryTextView"
+        app:layout_constraintTop_toTopOf="@+id/feeOrderHistoryTextView" />
 
     <TextView
         android:id="@+id/feeOrderHistoryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="10dp"
         android:text="24.54"
-        android:textSize="18sp"
         android:textColor="#373b54"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toRightOf="@id/textViewDollarSign"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
