@@ -44,9 +44,9 @@ public class IntroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
 
 
-//        InsertFood();
-//        InsertCategory();
-//        AutomaticInsertFoodVariation();
+        InsertFood();
+        InsertCategory();
+        AutomaticInsertFoodVariation();
 //        DeleteAllCart();
 
         startBtn=findViewById(R.id.startBtn);

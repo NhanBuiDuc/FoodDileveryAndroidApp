@@ -66,12 +66,12 @@ public class PopularAdaptor extends RecyclerView.Adapter<PopularAdaptor.ViewHold
                 holder.itemView.getContext().startActivity(intent);
             }
         });
-//        holder.addFavoriteBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                favoriteDB.InsertFavorite(new FavoriteDomain(CurrentUser.getUser_id(), popularFood.get(position).getId()));
-//            }
-//        });
+        holder.addFavoriteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                favoriteDB.InsertFavorite(new FavoriteDomain(CurrentUser.getUser_id(), popularFood.get(position).getId()));
+            }
+        });
     }
 
     @Override
@@ -80,8 +80,8 @@ public class PopularAdaptor extends RecyclerView.Adapter<PopularAdaptor.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title, fee, addFavoriteBtn;
-        ImageView pic;
+        TextView title, fee;
+        ImageView pic,addFavoriteBtn;
         TextView addBtn;
 
         public ViewHolder(@NonNull View itemView) {
@@ -90,7 +90,7 @@ public class PopularAdaptor extends RecyclerView.Adapter<PopularAdaptor.ViewHold
             this.fee = itemView.findViewById(R.id.fee);
             this.pic = itemView.findViewById(R.id.pic);
             this.addBtn = itemView.findViewById(R.id.addBtn);
-            //this.addFavoriteBtn = itemView.findViewById(R.id.addFavoriteButton);
+            this.addFavoriteBtn = itemView.findViewById(R.id.addFavoriteButton);
         }
     }
 }
