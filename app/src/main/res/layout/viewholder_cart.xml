@@ -121,7 +121,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/plusCartBtn"
         app:layout_constraintEnd_toEndOf="@+id/feeEachItem"
-        app:layout_constraintTop_toTopOf="@+id/plusCartBtn" />
+        app:layout_constraintTop_toTopOf="@+id/plusCartBtn"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textViewDollarSign"

@@ -47,6 +47,9 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
             for(CartDomain cartItem: cartDomains){
                 FoodDomain food;
                 food = productDB.SelectProductByID(cartItem.getProduct_id());
+                if(food == null) {
+                    System.out.println("Can't get food from DB!");
+                }
                 this.foodDomains.add(food);
             }
         }
@@ -68,10 +71,10 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
             CartDomain cartItem = cartDB.SelectCartByProductID( foodDomains.get(position).getId() );
 
             holder.title.setText(foodItem.getTitle());
-            holder.feeEachItem.setText( String.valueOf(foodItem.getFee()) );
-            holder.totalEachItem.setText( String.valueOf( Math.round( ( cartItem.getQuantity() * foodItem.getFee() ) * 100) / 100) );
+            holder.feeEachItem.setText( String.valueOf(foodItem.getFee()));
+            holder.totalEachItem.setText( String.valueOf(( cartItem.getQuantity() * foodItem.getFee() * 100) / 100) );
             holder.numberItemTxt.setText(String.valueOf( cartItem.getQuantity() ));
-            int drawableResourceId =holder.itemView.getContext().getResources().getIdentifier( foodItem.getPic(), "drawable", holder.itemView.getContext().getPackageName());
+            int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier( foodItem.getPic(), "drawable", holder.itemView.getContext().getPackageName());
 //        holder.title.setText(foodDomains.get(position).getTitle());
 //        holder.feeEachItem.setText(String.valueOf(foodDomains.get(position).getFee()));
 //        holder.totalEachItem.setText(String.valueOf(Math.round((cartDB.CountCartItem() * foodDomains.get(position).getFee()) * 100) / 100));

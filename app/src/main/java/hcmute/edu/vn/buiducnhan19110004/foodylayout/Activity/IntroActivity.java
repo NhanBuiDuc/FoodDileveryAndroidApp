@@ -11,9 +11,11 @@ import java.util.ArrayList;
 
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.CartDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.CategoryDB;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FavoriteDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodVariationDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.ProductDB;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.TransactionDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.CategoryDomain;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.FoodDomain;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.FoodVariationDomain;
@@ -29,6 +31,8 @@ public class IntroActivity extends AppCompatActivity {
     private CategoryDB categoryDB = new CategoryDB(foodyDBHelper);;
     private FoodVariationDB food_variationDB = new FoodVariationDB(foodyDBHelper);
     private CartDB cartDB = new CartDB(foodyDBHelper);
+    private TransactionDB transactionDB = new TransactionDB(foodyDBHelper);
+    private FavoriteDB favoriteDB = new FavoriteDB(foodyDBHelper);
 
     // Lists
     ArrayList<FoodDomain> foodList = new ArrayList<>();
@@ -39,11 +43,11 @@ public class IntroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
 
-        //SetCurrentUser();
-        InsertFood();
-        InsertCategory();
-        AutomaticInsertFoodVariation();
-        DeleteAllCart();
+
+//        InsertFood();
+//        InsertCategory();
+//        AutomaticInsertFoodVariation();
+//        DeleteAllCart();
 
         startBtn=findViewById(R.id.startBtn);
         startBtn.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +152,13 @@ public class IntroActivity extends AppCompatActivity {
     }
     private void DeleteAllCart(){
         cartDB.ClearCartTable();
+    }
 
-        cartDB.SelectAllItemsInCartOfAllUsers();
+    private void DeleteAllFavorite() {
+        favoriteDB.DeleteAllFavorites();
+    }
+
+    private void DeleteAllTransaction() {
+        transactionDB.DeleteAllTransactions();
     }
 }

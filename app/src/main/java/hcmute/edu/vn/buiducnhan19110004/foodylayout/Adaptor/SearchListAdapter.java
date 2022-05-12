@@ -1,5 +1,6 @@
 package hcmute.edu.vn.buiducnhan19110004.foodylayout.Adaptor;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,7 +17,11 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity.ShowDetailActivity;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FavoriteDB;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.FavoriteDomain;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Domain.FoodDomain;
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Helper.CurrentUser;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.R;
 
 public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.ViewHolder> {
@@ -23,10 +29,15 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
     Context baseContext;
     // List
     ArrayList<FoodDomain> foodDomainArrayList;
+    //Database
+    FoodyDBHelper foodyDBHelper;
+    FavoriteDB favoriteDB;
 
     public SearchListAdapter(ArrayList<FoodDomain> foodDomainArrayList, Context context) {
         this.foodDomainArrayList = foodDomainArrayList;
         this.baseContext = context;
+        this.foodyDBHelper = new FoodyDBHelper(context);
+        this.favoriteDB = new FavoriteDB(foodyDBHelper);
     }
 
     @NonNull
@@ -38,7 +49,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.textViewFoodTitle.setText(foodDomainArrayList.get(position).getTitle());
         holder.textViewFee.setText(String.valueOf(foodDomainArrayList.get(position).getFee()));
         String picUrl = foodDomainArrayList.get(position).getPic();
@@ -50,8 +61,15 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(holder.itemView.getContext(), ShowDetailActivity.class);
-                intent.putExtra("object", foodDomainArrayList.get(holder.getAbsoluteAdapterPosition()));
+                intent.putExtra("object", foodDomainArrayList.get(position));
                 holder.itemView.getContext().startActivity(intent);
+            }
+        });
+        holder.addFavoriteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                favoriteDB.InsertFavorite(new FavoriteDomain(CurrentUser.getUser_id(), foodDomainArrayList.get(position).getId()));
+                Toast.makeText(baseContext, "Insert favorite successfully", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -63,7 +81,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageViewFoodPicture;
+        ImageView imageViewFoodPicture, addFavoriteBtn;
         TextView textViewFoodTitle, textViewFee;
         TextView FoodList_buttonAdd;
         public ViewHolder(@NonNull View itemView) {
@@ -72,6 +90,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
             this.textViewFoodTitle = itemView.findViewById(R.id.textViewFoodTitle);
             this.textViewFee = itemView.findViewById(R.id.textViewFee);
             this.FoodList_buttonAdd = itemView.findViewById(R.id.FoodList_buttonAdd);
+            this.addFavoriteBtn = itemView.findViewById(R.id.addFavoriteButton);
         }
     }
 }

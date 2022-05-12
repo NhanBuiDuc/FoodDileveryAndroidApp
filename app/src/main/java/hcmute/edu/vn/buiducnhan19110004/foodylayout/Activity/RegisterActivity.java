@@ -58,22 +58,32 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void RegisterUser() {
-        if(!passEditText.getText().equals(confirmPassEditText.getText())) {
-            //write code to return to register page and announce that password didn't match
+        if(fullnameEditText.getText().toString().trim().equals("") ||
+                emailEditText.getText().toString().trim().equals("") ||
+                phoneEditText.getText().toString().trim().equals("") ||
+                passEditText.getText().toString().trim().equals("")) {
+            Toast.makeText(this, "Invalid input!", Toast.LENGTH_SHORT).show();
         }
-
-        fullname = fullnameEditText.getText().toString().trim();
-        email = emailEditText.getText().toString().trim();
-        phone = phoneEditText.getText().toString().trim();
-        password = passEditText.getText().toString().trim();
-        UserDomain insertUser = new UserDomain(0, fullname, email, phone, password);
-        if(userDb.CheckDuplicateEmail(insertUser)) {
-            Toast toast = Toast.makeText(RegisterActivity.this, "Email already existed", Toast.LENGTH_SHORT);
-            toast.show();
+        else if(!passEditText.getText().toString().trim().equals(confirmPassEditText.getText().toString().trim())) {
+            Toast.makeText(this, "Confirm password doesn't match!", Toast.LENGTH_SHORT).show();
         }
         else {
-            userDb.InsertUser(insertUser);
-            userDb.SelectALlUsers();
+            fullname = fullnameEditText.getText().toString().trim();
+            email = emailEditText.getText().toString().trim();
+            phone = phoneEditText.getText().toString().trim();
+            password = passEditText.getText().toString().trim();
+            UserDomain insertUser = new UserDomain(0, fullname, email, phone, password);
+            if(userDb.CheckDuplicateEmail(insertUser)) {
+                Toast toast = Toast.makeText(RegisterActivity.this, "Email already existed", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            else {
+                userDb.InsertUser(insertUser);
+                userDb.SelectALlUsers();
+                Toast toast = Toast.makeText(RegisterActivity.this, "Register successfully for user " + insertUser.getEmail(), Toast.LENGTH_SHORT);
+                toast.show();
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            }
         }
     }
 }

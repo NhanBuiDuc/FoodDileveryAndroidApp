@@ -23,6 +23,7 @@ public class ProductDB {
     public ProductDB(FoodyDBHelper dbHelper) {
         this.dbHelper = dbHelper;
     }
+
     public long InsertProduct(FoodDomain foodDomain){
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
         try{
@@ -101,7 +102,7 @@ public class ProductDB {
         }
     }
     public FoodDomain SelectProductByName(String productName){
-        FoodDomain food;
+        FoodDomain food = null;
         String[] projection = {first_col, second_col, third_col, forth_col, fifth_col};
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
 
@@ -110,23 +111,28 @@ public class ProductDB {
             db.beginTransaction();
             cursor = db.query(TABLE_NAME, projection, "name = ? ", new String[]{productName}, null, null, null);
             db.endTransaction();
-            cursor.moveToNext();
 
-            int id = cursor.getInt(0);
-            String name = cursor.getString(1);
-            String pic = cursor.getString(2);
-            String description = cursor.getString(3);
-            Double price = cursor.getDouble(4);
+            if(cursor != null && cursor.moveToFirst()) {
+                cursor.moveToNext();
 
-            System.out.println("ID: "+ id);
-            System.out.println("name: "+ name);
-            System.out.println("pic: "+ pic);
-            System.out.println("description: "+ description);
-            System.out.println("price: "+ price);
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String pic = cursor.getString(2);
+                String description = cursor.getString(3);
+                Double price = cursor.getDouble(4);
 
-            food = new FoodDomain(id, name, pic, description, price);
 
-            System.out.println("Get data at ID: " + id + " successfully from table " + TABLE_NAME);
+                System.out.println("ID: "+ id);
+                System.out.println("name: "+ name);
+                System.out.println("pic: "+ pic);
+                System.out.println("description: "+ description);
+                System.out.println("price: "+ price);
+
+                food = new FoodDomain(id, name, pic, description, price);
+
+                System.out.println("Get data at ID: " + id + " successfully from table " + TABLE_NAME);
+            }
+
             return food;
             }
         catch (SQLiteConstraintException e){
@@ -136,32 +142,37 @@ public class ProductDB {
         }
     }
     public FoodDomain SelectProductByID(int productID){
-        FoodDomain food;
+        FoodDomain food = null;
         String[] projection = {first_col, second_col, third_col, forth_col, fifth_col};
         SQLiteDatabase db = this.dbHelper.getReadableDatabase();
-        //
+
         Cursor cursor;
         try{
             db.beginTransaction();
-            cursor = db.query(TABLE_NAME, projection, TABLE_NAME +".id = ? ", new String[]{String.valueOf(productID)}, null, null, null);
+            cursor = db.query(TABLE_NAME, projection, "id = ? ", new String[]{String.valueOf(productID)}, null, null, null);
             db.endTransaction();
-            cursor.moveToNext();
+            if(cursor != null && cursor.moveToFirst()) {
 
-            int id = cursor.getInt(0);
-            String name = cursor.getString(1);
-            String pic = cursor.getString(2);
-            String description = cursor.getString(3);
-            Double price = cursor.getDouble(4);
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String pic = cursor.getString(2);
+                String description = cursor.getString(3);
+                Double price = cursor.getDouble(4);
 
-            System.out.println("ID: "+ id);
-            System.out.println("name: "+ name);
-            System.out.println("pic: "+ pic);
-            System.out.println("description: "+ description);
-            System.out.println("price: "+ price);
+                System.out.println("ID: "+ id);
+                System.out.println("name: "+ name);
+                System.out.println("pic: "+ pic);
+                System.out.println("description: "+ description);
+                System.out.println("price: "+ price);
 
-            food = new FoodDomain(id, name, pic, description, price);
+                food = new FoodDomain(id, name, pic, description, price);
 
-            System.out.println("Get data at ID: " + id + " successfully from table " + TABLE_NAME);
+                System.out.println("Get data at ID: " + id + " successfully from table " + TABLE_NAME);
+            }
+            else {
+                System.out.println("Get product failed at product_id = " + productID);
+            }
+
             return food;
         }
         catch (SQLiteConstraintException e){
