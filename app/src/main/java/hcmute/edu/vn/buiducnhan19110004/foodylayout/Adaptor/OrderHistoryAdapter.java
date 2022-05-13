@@ -2,6 +2,7 @@ package hcmute.edu.vn.buiducnhan19110004.foodylayout.Adaptor;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import hcmute.edu.vn.buiducnhan19110004.foodylayout.Activity.MerchantActivity;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.CartDB;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.FoodyDBHelper;
 import hcmute.edu.vn.buiducnhan19110004.foodylayout.Database.ProductDB;
@@ -65,7 +68,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         try {
             FoodDomain foodItem = foodDomains.get(position);
             TransactionDomain transactionItem = transactionDomains.get(position);
@@ -78,6 +81,15 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier( foodItem.getPic(), "drawable", holder.itemView.getContext().getPackageName());
 
             Glide.with(holder.itemView.getContext()).load(drawableResourceId).into(holder.picOrderHistory);
+
+            holder.openMerchantBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(holder.itemView.getContext(), MerchantActivity.class);
+                    intent.putExtra("productId", foodDomains.get(position).getId());
+                    holder.itemView.getContext().startActivity(intent);
+                }
+            });
         }
         catch (Exception e) {
             System.out.println("No list read");
@@ -92,6 +104,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView picOrderHistory;
         TextView titleOrderHistory, quantityOrderHistory, orderDateOrderHistory, feeOrderHistory;
+        ConstraintLayout openMerchantBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -101,6 +114,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             orderDateOrderHistory = itemView.findViewById(R.id.orderDateOrderHistoryTextView);
             feeOrderHistory = itemView.findViewById(R.id.feeOrderHistoryTextView);
             picOrderHistory = itemView.findViewById(R.id.picOrderHistoryImageView);
+            openMerchantBtn = itemView.findViewById(R.id.orderHistoryConstraintLayout);
         }
     }
 }
